@@ -1,0 +1,20 @@
+<?php if ($cross): ?>
+
+<div class="detail-box">
+    <h1 class="title-box">Recommended</h1>
+    <ul class="list-crosslink list-unstyled">
+    <?php $related = json_decode($cross['news_related_content']);
+    $no = 1;
+    foreach ($related as $key):
+    $tmp = explode('|', $key); ?>
+    
+        <li>
+            <a href="<?php echo $tmp[1] ?>" onclick="ga('send', 'event', '<?= $cross['TE']?>', 'Crosslink', 'Artikel ke-<?= $no ?>');" target="_blank"><?php echo $tmp[0] ?></a>
+        </li>
+    <?php 
+    $no++;
+    endforeach ?>
+    </ul>
+</div>
+
+<?php endif ?>

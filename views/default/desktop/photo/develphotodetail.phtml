@@ -1,0 +1,185 @@
+<!--share-article-->
+<div class="share-fixed">
+    <div class="fixed-table">
+        <div class="fixed-left">
+            <h5 class="link-share"><?= $news_data['news_title'] ?></h5>
+        </div>
+        <div class="fixed-right">
+            <div class="share-right pull-right">
+                <div class="max-share"><span class="fb-share-count-box"></span><span class="text-share">Shares</span></div>
+                <div class="col-btn-share">
+                    <a href="<?="http://www.facebook.com/sharer/sharer.php?u=". $news_data['news_url_with_base'] ?>" onclick="window.open(this.href, 'child', 'scrollbars,width=600,height=260'); return false" class="btn-animation btn-fb">
+                        <div class="icon">
+                            <div class="before"><span class="fb"></span></div>
+                            <div class="after"><span class="fb"></span></div>
+                        </div>
+                        <span class="text-btn">SHARE</span>
+                        <span class="overlay"></span>
+                    </a>
+                </div>
+                <div class="col-btn-share">
+                    <a href="<?= "https://twitter.com/intent/tweet?text=Brilio.net - ". $news_data['news_title']. "&url=". $news_data['news_url_with_base']. "&via=brilio.net"?>" onclick="window.open(this.href, 'child', 'scrollbars,width=600,height=260'); return false" class="btn-animation btn-tweet">
+                        <div class="icon">
+                            <div class="before"><span class="tweet"></span></div>
+                            <div class="after"><span class="tweet"></span></div>
+                        </div>
+                        <span class="text-btn">TWEET</span>
+                        <span class="overlay"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--endshare-article-->
+<!--carousel-->
+<div class="slider-owl">
+    <div class="navigation">
+        <a class="prev" onclick="ga('send', 'event', '<?= $TE ?>', 'Carousel button', 'Prev');" ><span class="arrow-left"></span></a>
+        <a class="next" onclick="ga('send', 'event', '<?= $TE ?>', 'Carousel button', 'Next');" ><span class="arrow-right"></span></a>
+    </div>
+    <div class="owl-carousel">
+        <?php $no=1;
+        foreach ($whats_hot as $key): ?>
+            <div class="slide"> 
+            <a href="<?= $key['what_happen_url'] ?>" onclick="ga('send', 'event', '<?= $TE ?>', 'Carousel article', 'Artikel ke-<?=$no?>');"  >
+                <img src="<?= $key['what_happen_image_location_full']  ?>" onerror="this.src='<?= $this->config['assets_image_url_v2']?>default-278x185.jpg'" /> 
+                <div class="deskrip-slide">
+                    <p><?= $key['what_happen_content'] ?></p>
+                </div>
+            </a>
+            </div>
+        <?php $no++;
+        endforeach ?>
+    </div>
+</div>
+<!--endcarousel-->
+<!--breadcrumb-->
+<ol class="list-breadcrumb  list-unstyled">
+    <li><a href="<?php echo $this->config['rel_url'] ?>">BRILIO.NET</a></li>
+    <li>&raquo;</li>
+    <li><a href="<?php echo $this->config['rel_url'].$breadcrumb['CATEGORY_URL'] ?>"><?php echo $breadcrumb['CATEGORY_TITLE'] ?></a></li>
+</ol>
+<!--endbreadcrumb-->
+<!--wrapper-->
+<div class="wrapper-col">
+    <div class="wrapper-left">
+        <div class="detail-article">
+        	<div class="headline-detail">
+                <div class="author-read"><?= $news_data['reporter'] ?></div>
+                <h1><?= $news_data['news_title'] ?></h1>
+                <h6>"<?= $news_data['news_synopsis'] ?>"</h6>
+            </div>
+            <div class="sosmed-box">
+                <!-- sosmed newshub -->
+                <div class="social-box">
+                    <!-- social share container -->
+                    <div id="social-share"></div>
+                    <!-- social share container -->
+                    <script type="text/javascript">
+                        $(document).ready(function () {
+                            $('#social-share').socialShare({
+                                url: "<?= $news_data['news_url_with_base'] ?>",
+                                twitter_user: "brilionet"
+                            });
+                        });
+                    </script>
+                </div>
+                <!-- end of sosmed newshub -->
+            </div>
+            <div class="body-paragraph">
+            <?php if ($news_data['news_active_photos']['photonews_news_photo_no'] == 1 ): ?>
+                <?php echo html_entity_decode($news_data['news_content']) ?>
+            <?php endif ?>
+            	<div class="detail-foto detail-img">
+                    <div class="detail-arrow detail-split clearfix">
+                        <a href="<?= isset($news_data['news_data_prev_photo']) ? $news_data['news_data_prev_photo']['news_photo_url'] : '#' ?>" onclick="ga('send', 'event', 'Detail foto', 'Prev next top', 'Prev');" class="pull-left">PREV</a>
+                        <div class="number"><span><?php echo $news_data['news_active_photos']['photonews_news_photo_no']. "/" .count($news_data['all_photos']);  ?></span></div>
+                        <a href="<?= isset($news_data['news_data_next_photo']) ? $news_data['news_data_next_photo']['news_photo_url'] : '#' ?>" onclick="ga('send', 'event', 'Detail foto', 'Prev next top', 'Next');" class="pull-right">NEXT</a>
+                    </div>
+                    <img src="<?php echo $news_data['news_active_photos']['photonews_image_location']; ?>" />
+                    <div class="deskrip-foto">
+                        <p><?php echo $news_data['news_active_photos']['photonews_description'] ?></p>
+                        <span class="ilustrasi"Hak Cipta : <?= isset($news_data['news_active_photos']) ? $news_data['news_active_photos']['photonews_copyright'] : '' ?></span>
+                    </div>
+                    <?php if (isset($news_data['news_photos_thumbnail_list']) && !empty($news_data['news_photos_thumbnail_list']) ): ?>
+                        <ul class="list-thumb list-unstyled clearfix">
+                        <li class="arrow pull-left"><a href="<?= isset($news_data['news_data_prev_photo']) ? $news_data['news_data_prev_photo']['news_photo_url'] : '#' ?>" onclick="ga('send', 'event', 'Detail foto', 'Prev next bottom', 'Prev');" ><span class="arrow-foto-img"></span></a></li>
+                        <?php 
+                            $no=1;
+                            foreach ($news_data['news_photos_thumbnail_list'] as $ls_photos): 
+                        ?>  
+                            <li class="<?= $ls_photos['thumbnail_state']; ?>" >
+                                <a href="<?php echo $ls_photos['news_thumbnail_url'] ?>" onclick="ga('send', 'event', 'Detail foto', 'Thumbnail foto', 'foto ke-<?= $no ?>');">
+                                    <img data-src="<?php echo $ls_photos['thumbnail_url'] ?>" src="<?php echo $ls_photos['thumbnail_url'] ?>" data-src-retina="<?php echo $ls_photos['thumbnail_url'] ?>" width="89"class="lazy">
+                                </a>
+                            </li>
+                        <?php  
+                            $no++;
+                            endforeach; 
+                        ?>
+                        <li class="arrow pull-right"><a href="<?= isset($news_data['news_data_next_photo']) ? $news_data['news_data_next_photo']['news_photo_url'] : '#' ?>" onclick="ga('send', 'event', 'Detail foto', 'Prev next bottom', 'Next');" ><span class="arrow-foto-img"></span></a></li>
+                        </ul>
+                    <?php endif ?>
+                </div>
+                <p class="author"><?php echo $news_data['author']['inisial_editor'] ?></p>
+            </div>
+            <div class="detail-box">
+            <?php if (isset($news_data['news_tag_list']) && !empty($news_data['news_tag_list'])): ?>
+                <ul class="list-tag-border list-unstyled clearfix">
+                <?php 
+                $no=1;
+                foreach ($news_data['news_tag_list'] as $key): ?>
+                    <li><a href="<?= $key['tag_url_full'] ?>"  onclick="ga('send', 'event', 'Detail foto', 'Tags article', 'Tag ke-<?=$no ?>');"><?= $key['tag_news_tags']  ?></a></li>
+                <?php 
+                $no++;
+                endforeach ?>
+                </ul>
+            <?php endif ?>
+            </div>
+            <div class="detail-box">
+            	<div class="detail-share row">
+                	<div class="col-md-6">
+                        <a href="<?="http://www.facebook.com/sharer/sharer.php?u=". $news_data['news_url_with_base'] ?>" onclick="window.open(this.href, 'child', 'scrollbars,width=600,height=260'); return false" class="btn-animation btn-fb">
+                            <div class="icon">
+                                <div class="before"><span class="fb"></span></div>
+                                <div class="after"><span class="fb"></span></div>
+                            </div>
+                            <span class="text-btn">SHARE ON FACEBOOK</span>
+                            <span class="overlay"></span>
+                        </a>
+                    </div>
+                    <div class="col-md-6">
+                        <a href="<?= "https://twitter.com/intent/tweet?text=Brilio.net - ". $news_data['news_title']. "&url=". $news_data['news_url_with_base']. "&via=brilio.net"?>" onclick="window.open(this.href, 'child', 'scrollbars,width=600,height=260'); return false" class="btn-animation btn-tweet">
+                            <div class="icon">
+                                <div class="before"><span class="tweet"></span></div>
+                                <div class="after"><span class="tweet"></span></div>
+                            </div>
+                            <span class="text-btn">SHARE ON TWITTER</span>
+                            <span class="overlay"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-box">
+            	<div class="title-border">
+                    <h4 class="title-line">WHAT DO YOU THINK</h4>
+                </div>
+                <div class="content-box">
+                    <div class="content-left-commant">
+                        <div class="fb-comments" data-href="<?php echo $news_data['news_url_with_base'] ?>" data-width="100%" data-numposts="10" data-colorscheme="light"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper-right">
+    	<div class="article-col-right">
+        	<?php echo $collect_email ?>
+        </div>
+        <?php echo $trending ?>
+    </div>
+</div>
+<!--endwrapper-->
+<?php echo $list_related_news ?>

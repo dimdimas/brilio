@@ -1,0 +1,80 @@
+<!--section -->
+<div class="section">
+    <ol class="list-breadcrumb list-unstyled">
+        <!-- {BREADCUMB} -->
+        <li>
+            <a href="<?php echo $this->config['rel_url']; ?>" onclick="ga('send', 'event', 'Home - Breadcumb', 'Click', 'Home');">HOME</a>
+        </li>
+        <li>
+            &raquo;
+        </li>
+        <li>
+            <a href="#" onclick="ga('send', 'event', 'Brand - Breadcumb, 'Click', 'Brands');">BRANDS</a>
+        </li>
+        <li>
+            &raquo;
+        </li>
+        <li>
+            <a href="#" onclick="ga('send', 'event', '<?= $TE ?> - Breadcumb', 'Click', '<?php echo $breadcrumb['tag_title'] ?>');"><?php echo $breadcrumb['tag_alphabet'] ?></a>
+        </li>
+        <li>
+            &raquo;
+        </li>
+        <li>
+            <a href="<?php echo $this->config['rel_url']; ?>brands/<?php echo $breadcrumb['tag_alphabet']."/".str_replace(' ', '-', str_replace('#', '', strtolower($breadcrumb['tag_title']))) ?>/" onclick="ga('send', 'event', '<?= $TE ?> - Breadcumb', 'Click', '<?php echo $breadcrumb['tag_title'] ?>');"><?php echo  $breadcrumb['tag_title'] ?></a>
+        </li>
+        <!-- end {BREADCUMB} -->
+    </ol>
+
+    <div class="header-br">
+        <div class="title-list text-left">
+            <h6><?php echo $breadcrumb['tag_title'] ?></h6>
+            <a href="<?= !empty($breadcrumb['brand_url']) ? $breadcrumb['brand_url'] : '#' ?>" class="link-brand" target="_blank" onclick="ga('send', 'event', '<?= $TE ?>', 'Logo brand', '<?= !empty($breadcrumb['brand_url']) ? $breadcrumb['brand_url'] : '#' ?>');" >
+                <span>Published by <img src="<?= $breadcrumb['brand_image'] ?>" data-src="<?= $breadcrumb['brand_image'] ?>" ></span>
+            </a>
+        </div>
+        <!-- {HEADLINE} -->
+        <?php if ($list_tag['list_tag_first']): ?>
+            <?php foreach ($list_tag['list_tag_first'] as $key): ?>
+                    <a href="<?php echo $key['news_url_full'] ?>" onclick="ga('send', 'event', '<?= $TE ?> - Latest updates stream', 'Click', '<?php echo $breadcrumb['tag_title'] ?>');" class="img-headline blue">
+                        <img src="<?php echo  $key['news_image_url_full'] ?>" data-src="<?php echo  $key['news_image_url_full'] ?>" class="img-full">
+                    </a>
+                    <div class="deskrip-head-index">
+                        <h6 class="title-head">
+                            <a href="<?php echo $key['news_url_full'] ?>" onclick="ga('send', 'event', '<?= $TE ?> - Latest updates stream', 'Click', '<?php echo $breadcrumb['tag_title'] ?>');"><?php echo $key['news_title'] ?></a>
+                        </h6>
+                        <div class="kategori-date">
+                            <span class="date"><?php echo $key['news_date_publish_indo'] ?></span>
+                        </div>
+                    </div>
+            <?php endforeach ?>
+        <?php endif ?>
+        <!-- end {HEADLINE} -->
+    </div>
+
+    <!-- {NEWS} -->
+    <ul class="list-article-berita-border list-article-small list-unstyled">
+        <!-- {VIEW_NEWS} -->
+        <?php if ($list_tag['list_tag_second']): ?>
+            <?php foreach ($list_tag['list_tag_second'] as $key): ?>
+                <li>
+                    <div class="deskrip-br">
+                        <p class="deskrip-text">
+                            <a href="<?php echo $key['news_url_full'] ?>" onclick="ga('send', 'event', '<?php echo $breadcrumb['tag_title'] ?> - Index updates stream', 'Click', '<?php echo $key['news_title'] ?>');"><?php echo $key['news_title'] ?></a>
+                        </p>
+                        <span class="date"><?php echo $key['news_date_publish_indo'] ?></span>
+                    </div>
+                </li>
+            <?php endforeach ?>
+        <?php endif ?>
+        <!--  end {VIEW_NEWS} -->
+    </ul>
+    <ul class="list-pagination list-unstyled">
+        <!-- {PAGINATION} -->
+        <?php echo $pagination ?>
+        <!-- end {PAGINATION} -->
+    </ul>
+    <!-- end {NEWS} -->
+</div>
+<?php echo $today_tags; ?>
+<!--end section-->

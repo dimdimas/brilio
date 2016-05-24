@@ -1,0 +1,42 @@
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:media="http://search.yahoo.com/mrss/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Brilio.net</title>
+        <link>https://www.brilio.net/?utm_source=KurioApp&amp;utm_medium=Feed&amp;utm_campaign=BrilioKurio</link>
+        <description>
+           <![CDATA[ Temukan segala kisah kehidupan, gaya hidup, renungan, inspirasi, dan ilmu pengetahuan di sini ]]>
+        </description>
+        <language>id</language>
+	<image>
+		<title>Brilio.net</title>
+		<url>
+		https://www.brilio.net/assets/v2/img/logo-atas.png
+		</url>
+		<link>https://www.brilio.net/?utm_source=KurioApp&amp;utm_medium=Feed&amp;utm_campaign=BrilioKurio</link>
+	</image>
+	<media:group>
+		<media:title><?php echo $content[0]['media_title']; ?></media:title>
+		<media:content url="https://www.youtube.com/v/<?php echo $content[0]['media_code'] ?>?version=3" type="application/x-shockwave-flash" width="640" height="390"/>
+		<media:thumbnail url="https://i2.ytimg.com/vi/<?php echo $content[0]['media_code'] ?>/hqdefault.jpg" width="480" height="360"/>
+		<media:description>
+                    <![CDATA[ <?php echo $content[0]['media_description']; ?>YUK LANGSUNG AJA DITONTON.. JANGAN LUPA, JIKA KALIAN PUNYA TIPS JITU VERSI KAMU, BISA SHARING JUGA LEWAT COMMENT.. LOKASI GoRich Bar & Kitchen Jembatan Merah Gejayan 74 C Yogyakarta - Indonesia SUBSCRIBE https://www.youtube.com/channel/UCjRH2OCntkHDJi0kIX3DZ3w FACEBOOK: https://www.facebook.com/Brilio-Video-Indonesia-880513105395794/?ref=ts&fref=ts TWITTER: https://twitter.com/brilionet?lang=id INSTAGRAM: https://www.instagram.com/brilionet/?hl=en WEBSITE: http://brilio.net ]]>
+                </media:description>
+	</media:group>
+        <?php foreach ($content as $v) : ?>
+        <item>
+            <title><?php echo $v['title']; ?></title>
+            <link><?php echo $v['full_url'] ?>?utm_source=KurioApp&amp;utm_medium=Feed&amp;utm_campaign=BrilioKurio</link>
+            <guid><?php echo $v['full_url'] ?>?utm_source=KurioApp&amp;utm_medium=Feed&amp;utm_campaign=BrilioKurio</guid>
+			<category><?php echo $v['category_name'] ?></category>
+			<dc:creator>
+				<![CDATA[ <?php echo $v['reporter'] ?> ]]>
+			</dc:creator>
+            <pubDate><?php echo $v['date_time'] ?></pubDate>
+            <description><![CDATA[ <?php echo $v['synopsis'] ?> ]]></description>
+            <content:encoded>
+                <![CDATA[ <?php echo $v['content'] ?> ]]>
+            </content:encoded>
+            <enclosure url="<?php echo $v['img_headline'] ?>" length="<?php echo $v['img_size'] ?>" type="<?php echo $v['img_mime'] ?>"/>
+        </item>
+        <?php endforeach; ?>
+    </channel>
+</rss>

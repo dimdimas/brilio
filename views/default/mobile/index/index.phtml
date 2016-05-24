@@ -1,0 +1,130 @@
+
+<div class="brilio-headline clearfix">
+  <?php if ( !empty($headline_data) ): $no=1;?>
+    <?php foreach ($headline_data as $key => $val):  ?>
+      <?php if ($no == 1): ?>
+    		<div class="headline-block">
+    			<div>
+    				<a href="<?php echo $val['news_url'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Headline', 'Headline ke-<?php echo $no ?>');" ><img src="<?php echo $val['news_image_headline_big'] ?>" data-src="<?php echo $val['news_image_headline_big'] ?>" class="img-block" id="360" onerror="imgError(this)"></a>
+    				<div class="deskrip-headline">
+              <?php if ( !empty($val['news_tag_list'][0]) ): ?>
+    					  <a href="<?php echo $val['news_tag_list'][0]['tag_url_full'] ?>" class="kategori-headline" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Headline', 'Headline ke-<?php echo $no ?>');"><?php echo strtoupper($val['news_tag_list'][0]['tag_news_tags']) ?></a>
+              <?php endif; ?>
+    					<p class="text-headline"><a href="<?php echo $val['news_url_full'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Headline', 'Headline ke-<?php echo $no ?>');"><?php echo $val['news_title'] ?></a></p>
+    				</div>
+    			</div>
+    		</div>
+      <?php else: ?>
+    		<div class="headline-block">
+    			<div>
+    				<a href="<?php echo $val['news_url'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Headline', 'Headline ke-<?php echo $no ?>');"><img src="<?php echo $val['news_image_headline_small'] ?>" data-src="<?php echo $val['news_image_headline_small'] ?>" class="img-block" id="152" onerror="imgError(this)"></a>
+    				<div class="deskrip-headline mini-headline">
+              <?php if ( !empty($val['news_tag_list'][0]) ): ?>
+    					    <a href="<?php echo $val['news_tag_list'][0]['tag_url_full'] ?>" class="kategori-headline" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Headline', 'Headline ke-<?php echo $no ?>');"><?php echo strtoupper($val['news_tag_list'][0]['tag_news_tags']) ?></a>
+              <?php endif ?>
+    					<p class="text-headline"><a href="<?php echo $val['news_url_full'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Headline', 'Headline ke-<?php echo $no ?>');"><?php echo $val['news_title'] ?></a></p>
+    				</div>
+    			</div>
+    		</div>
+      <?php endif; ?>
+  <?php $no++; endforeach; ?>
+<?php endif; ?>
+<div class="section">
+  <?php echo $box_index_announcer ?>
+</div>
+	<div class="section">
+		<ul class="article-berita list-unstyled clearfix">
+      <?php $no=1 ;foreach ($just_update_data['latest_1'] as $key => $val): ?>
+  			<li>
+  				<a href="<?php echo $val['news_url_full'] ?>" class="article-left" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Latest 1', 'list ke-<?php echo $no ?>');" ><img src="<?php echo $val['news_image_location_latest_small'] ?>" data-src="<?php echo $val['news_image_location_latest_small'] ?>" id="113" onerror="imgError(this)"></a>
+                  <div class="deskrip-right">
+                  <?php if ( !empty($val['news_tag_list'][0]) ): ?>
+                      <a href="<?php echo $val['news_tag_list'][0]['tag_url_full'] ?>" class="link-kategori" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Latest 1', 'list ke-<?php echo $no ?>');" ><?php echo strtoupper($val['news_tag_list'][0]['tag_news_tags']) ?></a>
+                  <?php endif ?>
+                      <p class="text-article"><a href="<?php echo $val['news_url_full'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Latest 1', 'list ke-<?php echo $no ?>');" ><?php echo $val['news_title'] ?></a></p>
+                  </div>
+  			</li>
+      <?php $no++; endforeach; ?>
+		</ul>
+	</div>
+  <?php
+  if ( !empty($video_data[0]) ): ?>
+  	<div class="detail-video clearfix" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Video', 'Video ke-1" >
+  		<div class="auto-resizable-iframe" >
+        <div >
+          <?php echo html_entity_decode($video_data[0]['video']['video_path'])?>
+        </div>
+  		</div>
+  		<h5><a href="<?php echo $video_data[0]['news_url_full'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Video', 'Video ke-1"><?php echo $video_data[0]['news_title'] ?></a></h5>
+  	</div>
+  <?php endif; ?>
+	<div class="section">
+		<h5 class="title-bg">TRENDING</h5>
+		<ul class="list-trend list-unstyled clearfix">
+      <?php $count = 1; foreach ($trending_data['trending'] as $key => $val): ?>
+        <?php if ($count <= 7): ?>
+    			<li>
+            <?php if ( !empty($val['NEWS_TAG']) ): ?>
+    				  <a href="<?php echo $val['NEWS_TAG'][0]['tag_url_full'] ?>" class="link-kategori" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Trending', 'Trending ke-<?php echo $count ?>" ><?php echo strtoupper($val['NEWS_TAG'][0]['tag_news_tags']) ?></a>
+            <?php endif; ?>
+    				<h5><a href="<?php echo $val['NEWS_URL'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Trending', 'Trending ke-<?php echo $count ?>" ><?php echo $val['NEWS_TITLE'] ?></a></h5>
+    			</li>
+        <?php endif; ?>
+      <?php $count++; endforeach; ?>
+		</ul>
+
+    <?php if ( !empty($video_data[1]) ): ?>
+    	<div class="detail-video clearfix" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Video', 'Video ke-2" >
+    		<div class="auto-resizable-iframe">
+          <div>
+            <?php echo html_entity_decode($video_data[1]['video']['video_path'])?>
+          </div>
+    		</div>
+    		<h5><a href="<?php echo $video_data[1]['news_url_full'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Video', 'Video ke-1"><?php echo $video_data[1]['news_title'] ?></a></h5>
+    	</div>
+    <?php endif; ?>
+	</div>
+	<div class="section">
+		<h5 class="title-bg">LATEST UPDATE</h5>
+    <?php $no = 1; foreach ($just_update_data['latest_2'] as $key => $val): ?>
+      <?php if ($no == 1): ?>
+        <div class="headline-latepost">
+          <a href="<?php echo $val['news_url_full'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Just Update', 'List ke-<?php echo $no ?>" >
+      			<img src="<?php echo $val['news_image_location_latest_big'] ?>" data-src="<?php echo $val['news_image_location_latest_big'] ?>" class="img-block" id='360x240' onerror="imgError(this)">
+      			<h5><?php echo $val['news_title'] ?></h5>
+          </a>
+    		</div>
+      <ul class="list-latepost list-unstyled clearfix">
+      <?php else: ?>
+  			<li>
+  				<a href="<?php echo $val['news_url_full'] ?>"  onclick="ga('send', 'event', '<?php echo $TE ?>', 'Just Update', 'List ke-<?php echo $no ?>" ><img src="<?php echo $val['news_image_location_latest_medium'] ?>" data-src="<?php echo $val['news_image_location_latest_medium'] ?>" id="150" onerror="imgError(this)"></a>
+            <div class="deskrip-text">
+                <p class="text-article"><a href="<?php echo $val['news_url_full'] ?>"><?php echo $val['news_title'] ?></a></p>
+            </div>
+  			</li>
+      <?php endif; ?>
+    <?php $no++; endforeach; ?>
+      </ul>
+      <?php if ( !empty($video_data[2]) ): ?>
+      	<div class="detail-video clearfix" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Video', 'Video ke-3" >
+      		<div class="auto-resizable-iframe">
+            <div>
+              <?php echo html_entity_decode($video_data[2]['video']['video_path'])?>
+            </div>
+      		</div>
+      		<h5><a href="<?php echo $video_data[2]['news_url_full'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Video', 'Video ke-1"><?php echo $video_data[2]['news_title'] ?></a></h5>
+      	</div>
+      <?php endif; ?>
+		<ul class="list-latepost list-unstyled clearfix">
+      <?php $no = 11; foreach ($just_update_data['latest_3'] as $key => $val): ?>
+  			<li>
+  				<a href="<?php echo $val['news_url_full'] ?>" onclick="ga('send', 'event', '<?php echo $TE ?>', 'Just Update', 'List ke-<?php echo $no ?>" ><img src="<?php echo $val['news_image_location_latest_medium'] ?>" data-src="<?php echo $val['news_image_location_latest_medium'] ?>" id="150" onerror="imgError(this)"></a>
+                  <div class="deskrip-text">
+                      <p class="text-article"><a href="<?php echo $val['news_url_full'] ?>"><?php echo $val['news_title'] ?></a></p>
+                  </div>
+  			</li>
+      <?php $no++; endforeach; ?>
+		</ul>
+	</div>
+
+  <?php echo $_list_categories_bottom ?>

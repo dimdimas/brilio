@@ -1,0 +1,188 @@
+<!--section -->
+<!--<link rel="stylesheet" href="<?= $this->config['assets_css_url'] ?>detail.css?v=<?= $this->config['assets_css_version'] ?>" >-->
+
+<div class="section">
+    <!-- breadcrumb -->
+    <ol class="list-breadcrumb list-unstyled">
+        <li>
+            <a href="<?= $this->config['rel_url'] ?>" >Home</a>
+        </li>
+        <li>»</li>
+        <li>
+            <a href="<?= $breadcrumb['category_url'] ?>"><?=$breadcrumb['category'] ?></a>
+        </li>
+    </ol>
+    <!-- ./ breadcrumb -->
+
+<!-- detail-br -->
+<div class="detail-br">
+    <div class="headline-detail">
+        <span class="date"><?= $news_data['news_date_publish_indo'] ?></span>
+        <h1><?= $news_data['news_title'] ?></h1>
+        <span class="read-sinopsis"><?= $news_data['news_synopsis'] ?></span>
+        <span class="writer"><?= $news_data['reporter']['name'] ?></span>
+    </div>
+    <div class="img-detail">
+        <amp-img width="383" height="256" layout="responsive" src="<?= $news_data['news_image_location_full'] ?>" class="img-full"></amp-img>
+        <span class="img-copy"><?= $news_data['news_imageinfo'] ?></span>
+        <!-- NEWS PAGING TOP -->
+        <?php if ( isset($news_data['news_paging_list']) ): ?>
+            <?php if (count($news_data['news_paging_nav_list_top']) > 0): ?>
+            <ul class="artikel-paging-list list-unstyled clearfix">
+                <li class="intro <?= $news_data['news_paging_next']['intro_active_state'] ?>">
+                    <a href="<?= $news_data['news_url_full'] ?>" >INTRO</a>
+                </li>
+                <?php foreach ($news_data['news_paging_nav_list_top'] as $key): ?>
+                    <?php echo $key ?>
+                <?php endforeach ?>
+
+                <li class="arrow pull-right">
+                    <div class="pull-left"><a href="<?= (isset($news_data['news_paging_prev']['news_paging_url']) ? $news_data['news_paging_prev']['news_paging_url'] : '#' ) ?>" ><span class="arrow-detail arrow-left"></span></a></div>
+                    <div class="pull-left"><a href="<?= $news_data['news_paging_next']['news_paging_url'] ?>" ><span class="arrow-detail arrow-right"></span></a></div>
+                </li>
+            </ul>
+            <?php endif ?>
+        <?php endif ?>
+        <!-- ./ NEWS PAGING TOP-->
+    </div>
+
+
+    <div class="body-paragraph">
+        <p>
+        <div class="news-content">
+            <?php if (isset($news_data['news_paging_now_active']) &&  !empty($news_data['news_paging_now_active'])) : ?>
+            <p>
+                <strong><?= $news_data['news_paging_now_active']['news_paging_no'] . '. ' .$news_data['news_paging_now_active']['news_paging_title'] ?></strong>
+            </p>
+            <?php endif ?>
+            <?php
+            echo html_entity_decode($news_data['news_content']);
+            ?>
+        </div>
+        </p>
+
+        <?php if ( isset($news_data['news_paging_next']) ): ?>
+        <div class="detail-box next-paging text-center">
+            <a href="<?= $news_data['news_paging_next']['news_paging_url'] ?>" id="next-but" ><?= $news_data['news_paging_next']['news_paging_title'] ?></a>
+        </div>
+        <?php endif ?>
+
+        <!-- split -->
+        <?php if (!empty($split_data)): ?>
+        <center><div class="nextprev-paging text-center clearfix">
+                <div id="section-split">
+                <?php if ( isset($split_data['split_url_prev']) ): ?>
+                <!-- {PREV_SPLIT_NAV}  -->
+                <a href="<?= $split_data['split_url_prev']  ?>" id="prev-but-split">Prev</a>
+                    <?php if ( empty($split_data['split_url_next']) ) : ?>
+                        <span></span>
+                    <?php endif ?>
+                <?php endif ?>
+
+                <?php if ( isset($split_data['split_url_next']) ): ?>
+                <!-- {NEXT_SPLIT_NAV} -->
+                    <?php if ( empty($split_data['split_url_prev']) ): ?>
+                        <span></span>
+                    <?php endif ?>
+                <a href="<?= $split_data['split_url_next'] ?>" id="next-but-split">Next</a>
+                <?php endif ?>
+                </div>
+            </div></center>
+        <?php endif ?>
+        <!-- ./ split -->
+        <p><?= $news_data['author']['inisial_editor'] ?></p>
+    </div>
+    <?php echo $video; ?>
+    <ul class="read-box list-tag list-unstyled">
+        <?php
+        if(isset($news_data['news_tag_list']) AND !empty($news_data['news_tag_list'])) {
+            foreach ($news_data['news_tag_list'] as $key){
+            ?>
+                <li>
+                    <a href="<?= $key['tag_url_full'] ?>" ><?= $key['tag_news_tags'] ?></a>
+                </li>
+            <?php
+            }
+        }
+        if ( !empty($news_data['sponsor_tag']) )
+        {
+            $key= $news_data['sponsor_tag'] ;
+        ?>
+            <li>
+                <a href="<?= $key['tag_brand_url'] ?>" onclick="ga('send', 'event', '<?= $TE_2 ?>', 'Tag article', 'Brands');" target="_blank"><?= $key['tag_name'] ?></a>
+            </li>
+        <?php
+        }//if
+        ?>
+    </ul>
+
+    <center>
+        <div class="detail-box text-center">
+            <h6 class="title-black">SHARE NOW</h6>
+            <ul class="list-share list-unstyled">
+                <li>
+                    <a href="<?="http://www.facebook.com/sharer/sharer.php?u=". $news_data['url_share'] ?>" class="fb"></a>
+                </li>
+                <li>
+                <a href="<?= "https://twitter.com/intent/tweet?text=". $news_data['news_title']. "&url=". $news_data['url_share']. "&via=brilio.net"?>" class="twit"></a>
+                </li>
+                <li>
+                    <a href="<?= "whatsapp://send?text=" . "Brilio.net | " . $news_data['news_title'] . " " . $news_data['url_share']?>"  class="wa"></a>
+                </li>
+            </ul>
+        </div>
+    </center>
+    <div class="read-gateway">
+        <div class="read-gateway-img">
+            <a href="http://storytelling.brilio.net/">
+                <amp-img src="<?= $this->config['assets_image_url'] ?>hubungi.mobile.png" width="247" height="66"></amp-img>
+            </a>
+        </div>
+        <div class="read-gateway-text">
+            <a href="http://storytelling.brilio.net/">
+                <b>Everyone</b> has <b>Untold Stories</b>. Sebarkan ceritamu di sini.
+            </a>
+        </div>
+    </div>
+    <?php if (!empty($news_related)): ?>
+        <?php echo $news_related ?>
+    <?php endif ?>
+
+</div>
+<!-- ./detail-br -->
+
+<div class="list-article-box" >
+    <div class="bottom-tags-title">
+        <div class="bottom-tags-title-line"></div>
+        <div class="bottom-tags-title-name">MOST POPULAR</div>
+    </div>
+    <div class="box-float">
+        <ul class="list-article-berita list-number list-unstyled">
+            <?php
+            if(!empty($popular['trending'])):
+              foreach ($popular['trending'] as $key): ?>
+            <li>
+                <div class="article-left"><?= $key['NO'] ?></div>
+                <div class="deskrip-br-popular">
+                    <p class="deskrip-text">
+                        <a href="<?= $key['NEWS_URL'] ?>" onclick="ga('send', 'event', 'Homepage - Most popular', 'Click', '<?= $key['NEWS_TITLE'] ?>');" class="popular"><?= $key['NEWS_TITLE'] ?></a>
+                    </p>
+                </div>
+            </li>
+            <?php
+                endforeach;
+            endif;?>
+        </ul>
+    </div>
+</div>
+<div class="list-article-box">
+    <div class="section-hardlink">
+        <span><amp-img src="<?= $this->config['assets_image_url']?>Menu-Thin-grey-32-b.png" width="15" height="20"></amp-img></span>
+        <span><a href="<?= $this->config['rel_url']?>news/">NEWS</a></span>
+        <span><a href="<?= $this->config['rel_url']?>life/">LIFE</a></span>
+        <span><a href="<?= $this->config['rel_url']?>popular/">DAILY</a></span>
+        <span><a href="<?= $this->config['rel_url']?>popular/week/">WEEKLY</a></span>
+    </div>
+</div>
+</div>
+<?= $today_tags ?>

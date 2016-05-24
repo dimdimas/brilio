@@ -1,0 +1,36 @@
+<!-- tranding -->
+<?php if (!empty($trending)): ?>
+
+
+<div class="article-col-right">
+    <div class="title-border">
+        <h4 class="title-line">TRENDING</h4>
+    </div>
+    <ul class="list-article-block list-unstyled">
+        <?php
+        $no= 1;
+        foreach ($trending as $data):
+        ?>
+        <?php if ($no <= 7): ?>
+            <li>
+                <a href="<?php echo $data['NEWS_URL'] ?>" class="img-block" onclick="ga('send', 'event', '<?= $TE ?>', 'Trending', 'Trending ke-<?= $no ?>');">
+                    <img src="<?php echo $data['NEWS_IMAGE_URL'] ?>" data-src="<?php echo $data['NEWS_IMAGE_URL'] ?>" id="300" onerror="imgError(this)">
+                </a>
+                <div class="deskrip-block">
+                    <p class="text-block">
+                        <a href="<?php echo $data['NEWS_URL'] ?>" onclick="ga('send', 'event', '<?= $TE ?>', 'Trending', 'Trending ke-<?= $no ?>');">
+                            <?php echo $data['NEWS_TITLE']; ?>
+                        </a>
+                    </p>
+                </div>
+            </li>
+        <?php else: break;?>
+        <?php endif; ?>
+        <?php
+        $no++;
+        endforeach;
+        ?>
+    </ul>
+</div>
+<?php endif ?>
+<!-- end tranding -->

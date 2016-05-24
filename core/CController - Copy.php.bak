@@ -1,0 +1,916 @@
+<?php
+
+class CController extends Controller {
+
+    var $inlineparam;
+    protected $_categories = [];
+
+    function __construct() {
+        parent::__construct();
+        $this->model(['Rubrics','News','Tag','Domain','TagToday', 'Jsview', 'WhatHappen'], null, true);
+        list($this->_arr_categori, $this->_category) = $this->_get_categori_sm();
+        $this->_categories = $this->_set_categories();
+        $this->library(array('table', 'lib_date', 'widget'));
+    }
+    protected function _set_categories()
+    {
+        $this->model('rubric_model');
+        $ret = cache('list_categories', function(){
+            $res = [];
+            $rows = $this->rubric_model->get_all_category();
+            foreach($rows as $k => $v){
+                $res[$v['rubrics_id']] = $v;
+                $res['url_to_id'][$v['rubrics_url']] = $v['rubrics_id'];
+                $res['id_to_url'][$v['rubrics_id']] = $v['rubrics_url'];
+                $res['url_to_name'][$v['rubrics_url']] = $v['rubrics_name'];
+            }
+
+            return $res;
+        }, 3600 * 24);
+
+        return $ret;
+    }
+
+    protected function _render($template, $data = array()) {
+
+        $layout_data = [
+            'full_url'          => $data['full_url'],
+            'announcement'      => $this->view($this->config['viewport'].'/box/announcement', [], TRUE),
+            'content'           => $this->view($template, $data, true),
+            'meta'              => $data['meta'],
+            'canonical'         => $data['meta']['og_url'],
+            'amphtml'           => (isset($data['meta']['amphtml']) ? $data['meta']['amphtml'] : NULL),
+            'bottom_menu'       => (isset($data['bottom_menu']) ? $data['bottom_menu'] : NULL),
+        ];
+
+        return $this->view($this->config['viewport'].'/layouts/layout', $layout_data);
+    }
+
+    // function _tranding($limit = 4, $TE) {
+    //     $interval = WebCache::App()->get_config('cachetime_short');
+    //     $cacheKey = $config['viewport'].'_tranding_page_' . $TE;
+    //
+    //     if ($ret = checkCache($cacheKey))
+    //     {
+    //         return unserialize($ret);
+    //     }
+    //
+    //     $two_days_ago = date('Y-m-d',strtotime('- 2 days', time()));
+    //     $mostpop = cache('query_tredning_2_day'. $cacheKey, function() use ($two_days_ago, $limit) {
+    //         return newsPopular('pageview', $this->config['mongo_prefix'], strtotime($two_days_ago.' 00:00:00'), strtotime(date('Y-m-d H:i:s')), $limit);
+    //     }, $interval);
+    //
+    //
+    //
+    //     if(empty($mostpop))
+    //     {
+    //         $four_days_ago = date('Y-m-d',strtotime('- 4 days', time()));
+    //         $mostpop = cache('desktop_query_4_day'. $cacheKey, function() use ($four_days_ago, $limit) {
+    //             return newsPopular('pageview', $this->config['mongo_prefix'], strtotime($four_days_ago.' 00:00:00'), strtotime(date('Y-m-d H:i:s')), $limit);
+    //         }, $interval);
+    //     }
+    //
+    //     $mostpop = $this->generate_news_url($mostpop);
+    //     $ret = $mostpop;
+    //     $interval = WebCache::App()->get_config('cachetime_default');
+    //     setCache($cacheKey, serialize($ret), $interval);
+    //
+    //     return $ret;
+    // }
+
+    function _get_tags_today_top($cacheKey, $TE) {
+        if ($ret = checkCache($cacheKey))
+            return $ret;
+
+        $tag = cache($cacheKey, function()
+        {
+            return TagToday::join('tags', 'tags.id', '=' ,'today_tag.id_tag')
+                        ->where('domain_id', '=' , $this->config['domain_id'])
+                        ->where('status', '=' ,'1')
+                        // ->with('get_tag')
+                        ->orderBy('order', 'ASC')
+                        ->take(5)
+                        ->get()->toArray();
+        }, 3600);
+
+        foreach ($tag as $key => $v) {
+
+            if($v['tag_url'] != "ramalanshio2016")
+            {
+                $first_char = substr(strtolower($v["tag_url"]), 0, 1);
+                $tag[$key]['tag_url'] = $this->config['rel_url'] . 'tag/' . $first_char . '/' . str_replace(' ', '-', strtolower($v['tag_url']));
+            }
+            else
+            {
+                $tag[$key]['tag_url'] = "https://www.brilio.net/life/yuk-intip-prediksi-peruntungan-kamu-di-tahun-monyet-api-160206v.html";
+            }
+
+        }
+
+        $list_tags['LIST_TAGS_TODAY'] = '';
+        $list_tags['NAMA_HALAMAN'] = $TE;
+        if ($tag) {
+            $list_tags['LIST_TAGS_TODAY'] = $tag;
+        } else {
+            $list_tags['LIST_TAGS_TODAY'] = "";
+        }
+
+
+        $ret = $this->view('box/_set_box_tags_today', $list_tags, true);
+        $interval = WebCache::App()->get_config('cachetime_default');
+        setCache($cacheKey, $ret, $interval);
+        return $ret;
+    }
+
+    function _get_tags_today_bottom($cacheKey, $TE){
+
+        if ($ret = checkCache($cacheKey))
+            return $ret;
+
+        $tag = cache($cacheKey, function()
+        {
+            return TagToday::join('tags', 'tags.id', '=' ,'today_tag.id_tag')
+                    ->where('domain_id', '=' , $this->config['domain_id'])
+                    ->where('status', '=' ,'1')
+                    // ->with('get_tag')
+                    ->orderBy('order', 'ASC')
+                    ->skip(5)
+                    ->take(5)
+                    ->get()->toArray();
+        }, 3600);
+
+        foreach ($tag as $key => $v) {
+            $first_char = substr(strtolower($v["tag_url"]), 0, 1);
+            $tag[$key]['tag_url'] =$this->config['rel_url'] . 'tag/' . $first_char . '/' . str_replace(' ', '-', strtolower($v['tag_url']));
+        }
+
+        $list_tags['LIST_TAGS_TODAY'] = '';
+        if ($tag) {
+            $list_tags['LIST_TAGS_TODAY'] = $tag;
+        } else {
+            $list_tags['LIST_TAGS_TODAY'] = "";
+        }
+
+        $list_tags['TE'] = $TE;
+        $ret = $this->view('box/_set_box_tags_bottom', $list_tags, true);
+
+        $interval = WebCache::App()->get_config('cachetime_default');
+        setCache($cacheKey, $ret, $interval);
+
+        return $ret;
+    }
+
+    function _popular_tags($cacheKey, $TE)
+    {
+        $interval = WebCache::App()->get_config('cachetime_default');
+
+        if ($ret = checkCache($cacheKey))
+        {
+            return $ret;
+        }
+
+        $tag = cache("desktop_query-".$cacheKey, function()
+        {
+            return TagToday::join('tags', 'tags.id', '=' ,'today_tag.id_tag')
+                    ->where('domain_id', '=' , $this->config['domain_id'])
+                    ->where('status', '=' ,'1')
+                    ->orderBy('order', 'ASC')
+                    ->take(6)
+                    ->get()->toArray();
+        }, $interval);
+
+        foreach ($tag as $key => $v)
+        {
+            $first_char = substr(strtolower($v["tag_url"]), 0, 1);
+            $tag_fix[$key]['TAG_TITLE'] = $v['tag_url'];
+            $tag_fix[$key]['TAG_URL']   = $this->config['rel_url'] . 'tag/' . $first_char . '/' . str_replace(' ', '-', strtolower($v['tag_url']));
+            $tag_fix[$key]['TE']        = $TE;
+        }
+
+        $list_tags['POPULAR_TAGS'] = '';
+        if (!empty($tag))
+        {
+            $list_tags['POPULAR_TAGS'] = $tag_fix;
+        }
+        else
+        {
+            $list_tags['POPULAR_TAGS'] = "";
+        }
+
+
+        $ret = $this->view($this->config['viewport'].'/box/right_popular_tags', $list_tags, true);
+        setCache($cacheKey, $ret, $interval);
+        return $ret;
+    }
+
+    function _most_popular_tag($cacheKey, $TE){
+
+        if ($ret = checkCache($cacheKey))
+            return $ret;
+
+        $tag = cache($cacheKey, function()
+        {
+            return TagToday::join('tags', 'tags.id', '=' ,'today_tag.id_tag')
+                    ->where('domain_id', '=' , $this->config['domain_id'])
+                    ->where('status', '=' ,'1')
+                    ->orderBy('order', 'ASC')
+                    ->skip(5)
+                    ->take(5)
+                    ->get()->toArray();
+        }, 3600);
+
+        foreach ($tag as $key => $v)
+        {
+            $first_char = substr(strtolower($v["tag_url"]), 0, 1);
+            $tag_fix[$key]['TAG_TITLE'] = $v['tag_url'];
+            $tag_fix[$key]['TAG_URL']   = $this->config['rel_url'] . 'tag/' . $first_char . '/' . str_replace(' ', '-', strtolower($v['tag_url']));
+            $tag_fix[$key]['TE']        = $TE;
+        }
+        // $query_today_bottom = $this->today_tags_model->get_tags_today($order, $limit);
+        $list_tags['LIST_TAGS_TODAY'] = '';
+        if ($tag) {
+            $list_tags['LIST_TAGS_TODAY'] = $tag_fix;
+        } else {
+            $list_tags['LIST_TAGS_TODAY'] = "";
+        }
+
+
+        $ret = $this->view('box/_popular_tags', $list_tags, true);
+
+        $interval = WebCache::App()->get_config('cachetime_default');
+        setCache($cacheKey, $ret, $interval);
+
+        return $ret;
+    }
+
+    private function _get_categori_sm()
+    {
+        $row = cache('_get_categori_sm', function(){
+         return Rubrics::where('rubrics_invalid', '0')
+                    ->where('rubrics_domain_id', $this->config['domain_id'])
+                    ->orderBy('rubrics_parent', 'asc')
+                    ->get()
+                    ->toArray();
+        }, 3600 * 24);
+
+            $data_row = $row;
+            $dt       = array();
+
+            foreach ($row as $rs)
+            {
+                $dt['id_to_name'][$rs['rubrics_id']]   = $rs['rubrics_name'];
+                $dt['name_to_id'][$rs['rubrics_name']] = $rs['rubrics_id'];
+                $dt['url_to_id'][$rs['rubrics_url']]   = $rs['rubrics_id'];
+                $dt['id_to_url'][$rs['rubrics_id']]    = $rs['rubrics_url'];
+
+                if ($rs['rubrics_parent'] == '0' || !$rs['rubrics_parent'])
+                {
+                    $dt2[$rs['rubrics_id']] = $rs;
+                    $dt['grandparent_name_to_id'][$rs['rubrics_name']] = $rs['rubrics_id'];
+                    $dt['grandparent_id_to_name'][$rs['rubrics_id']]   = $rs['rubrics_name'];
+                    $dt['grandparent_url_to_id'][$rs['rubrics_url']]   = $rs['rubrics_id'];
+                    $dt['grandparent_id_to_url'][$rs['rubrics_id']]    = $rs['rubrics_url'];
+                }
+                else
+                {
+                    if (isset($dt['id_to_name'][$rs['rubrics_parent']]))
+                    {
+                        $dt2[$rs['rubrics_parent']]['child'][$rs['rubrics_id']] = $rs;
+                        $dt['child_id_to_parent'][$rs['rubrics_id']]            = $dt['id_to_name'][$rs['rubrics_parent']];
+                        $dt['child_id_to_parenturl'][$rs['rubrics_id']]         = $dt['id_to_url'][$rs['rubrics_parent']];
+                        $dt['child_name_to_parent'][$rs['rubrics_name']]        = $dt['id_to_name'][$rs['rubrics_parent']];
+                        $dt['child_url_to_parent'][$rs['rubrics_url']]          = $dt['id_to_name'][$rs['rubrics_parent']];
+                        $dt['child_url_to_parentid'][$rs['rubrics_url']]        = $rs['rubrics_parent'];
+                    }
+                }
+            }
+        return [$dt, $dt2];
+
+    }
+
+    function generate_news_url($row = array())
+    {
+
+        if (is_array($row) && count($row) > 0)
+        {
+            foreach ($row as $i => $v)
+            {
+                $id_category = json_decode($v['news_category'], true);
+                $id_category = (is_array($id_category) && count($id_category) > 0) ? $id_category[0] : false;
+                $url_cat     = (isset($this->_arr_categori['id_to_url'][$id_category]) ? $this->_arr_categori['id_to_url'][$id_category] : false);
+                $name_cat       = (isset($this->_arr_categori['id_to_name'][$id_category]) ? $this->_arr_categori['id_to_name'][$id_category] : false);
+                $parent_url_cat = (isset($this->_arr_categori['child_id_to_parenturl'][$id_category]) ? $this->_arr_categori['child_id_to_parenturl'][$id_category] : false);
+                $parent_name_cat= (isset($this->_arr_categori['child_id_to_parent'][$id_category]) ? $this->_arr_categori['child_id_to_parent'][$id_category] : false);
+
+                $url_all_cat = $url_cat;
+                if ($parent_url_cat)
+                    $url_all_cat = $parent_url_cat/*.'/'.$url_all_cat*/;
+
+                $url_cat2 = $url_cat;
+                if ($parent_url_cat)
+                    $url_cat2 = $parent_url_cat.'/'.$url_cat2;
+
+                $entry = explode(' ', $v['news_entry']);
+                $entry = str_replace('-', '/', $entry[0]);
+                $type  = array('news', 'photonews', 'video');
+
+                $urlPhoto = '';
+                if ($v['news_type'] == '1')
+                {
+                    $urlPhoto = "photo/";
+                }
+                else if ($v['news_type'] == '2')
+                {
+                    $urlPhoto = "video/";
+                }
+
+                if (isset($v['tag_url']) && !empty($v['tag_url']))
+                    $v['tag_url_full'] = $this->config['rel_url']. 'tag/'. $v['tag_url'][0] .'/'. $v['tag_url'] .'/';
+                if (isset($v['tag'][0]['tag_url']))
+                    $v['tag_url_full'] = $this->config['rel_url']. 'tag/'. $v['tag'][0]['tag_url'][0] .'/'. $v['tag'][0]['tag_url'] .'/';
+
+                if (isset($v['news_tag']))
+                {
+                    foreach ($v['news_tag'] as $k=>$v1)
+                    {
+                        $v['news_tag'][$k]['tag_url_full'] = $this->config['rel_url']. 'tag/'. $v1['tag_url'][0] .'/'. $v1['tag_url'] .'/';
+                    }
+                }
+                // echoPre($v['news_to_tag_news']);
+                if (isset($v['news_to_tag_news']))
+                {
+                    foreach ($v['news_to_tag_news'] as $k=>$v1)
+                    {
+                        $huruf_awal = strtolower( $v1['tag_news_tags']{0} );
+                        $tag_url    = strtolower( preg_replace('/[#! .]/', '-', $v1['tag_news_tags'] ) );
+                        $v['news_to_tag_news'][$k]['tag_url_full'] = $this->config['rel_url']. 'tag/'. $huruf_awal .'/'. $tag_url .'/';
+                    }
+                }
+
+                if (isset($v['news_tag_list']))
+                {
+                    foreach ($v['news_tag_list'] as $k=>$v1)
+                    {
+                        $tag_url    = strtolower( str_replace(' ', '-', $v1['tag_news_tags'] ) );
+                        $tag_url    = strtolower( preg_replace('/[#!.]/', '', $tag_url ) );
+                        $huruf_awal = strtolower( $tag_url{0} );
+                        $v['news_tag_list'][$k]['tag_url_full'] = $this->config['rel_url']. 'tag/'. $huruf_awal .'/'. $tag_url .'/';
+                    }
+                }
+
+                $v['news_id_category']          = $id_category;
+                $v['news_category_name']        = $name_cat;
+                $v['news_category_url']         = $this->config['rel_url']. $url_cat2 .'/';
+                $v['news_category_parent_name'] = $parent_name_cat;
+                $v['news_category_parent_url']  = $this->config['rel_url'] . $parent_url_cat . '/';
+                $v['news_url_full']             = $this->config['rel_url'] . $urlPhoto . $url_all_cat . '/' . $v['news_url'] . '.html';
+                $v['news_url_with_base']        = $this->config['www_url']. $urlPhoto . $url_all_cat . '/' . $v['news_url'] . '.html';
+                $v['news_url_with_base_amp']    = $this->config['www_url']. 'amp/' . $urlPhoto . $url_all_cat . '/' . $v['news_url'] . '.html';
+                $v['news_url_without_html']     = $this->config['rel_url'] . $urlPhoto . $url_all_cat . '/' . $v['news_url'] . '/';
+                $v['news_url_raw']              = $this->config['rel_url'] . $urlPhoto . $url_all_cat . '/';
+                $v['news_image_location']       = $this->config['klimg_url'].$type[$v['news_type']] . '/' . $entry .'/'. $v['news_id']. '/';
+                if(is_numeric($v['news_date_publish']))
+                {
+                    $v['news_date_publish_indo'] = $this->lib_date->indo(date("Y-m-d H:i:s", $v['news_date_publish']));
+                }
+                else
+                {
+                    $v['news_date_publish_indo'] = $this->lib_date->indo($v['news_date_publish']);
+                }
+                // $v['news_date_publish_indo']    = $this->lib_date->indo($v['news_date_publish']);
+
+                //cek apakah gambar terdapat pada halaman paging
+                $get_temp = $v['news_image'];
+                if (strpos($get_temp,'/paging/') !== FALSE)
+                {
+                    $split_img_path = explode('/', $v['news_image']);
+                    $filename = end($split_img_path);
+                    unset($split_img_path[count($split_img_path) - 1]);
+
+                    $v['news_image_location_full'] = $this->config['klimg_url']. implode('/', $split_img_path).'/657xauto-'.$filename ;
+                }
+                else
+                $v['news_image_location_full']      = $this->config['klimg_url'].$type[$v['news_type']] . '/' . $entry .'/'. $v['news_id']. '/750xauto-'. $v['news_image'];
+
+                if (isset($v['news_image_potrait']) && !empty($v['news_image_potrait']))
+                {
+                    $v['news_image_secondary_location'] = $this->config['klimg_url'].$type[$v['news_type']] . '/' . $entry .'/'. $v['news_id']. '/200x100-'. $v['news_image_potrait'];
+                    $v['news_image_thumbnail_360']      = $this->config['klimg_url'].$type[$v['news_type']] . '/' . $entry .'/'. $v['news_id']. '/360x180-'. $v['news_image_potrait'];
+                    $v['news_image_thumbnail_300']      = $this->config['klimg_url'].$type[$v['news_type']] . '/' . $entry .'/'. $v['news_id']. '/300x150-'. $v['news_image_potrait'];
+                }
+                else{
+                    $v['news_image_secondary_location'] = $v['news_image_location_full'];
+                    $v['news_image_thumbnail_360']      = $v['news_image_thumbnail'];
+                    $v['news_image_thumbnail_300']      = $v['news_image_thumbnail'];
+                }
+                $v['news_image_106']                = $this->config['klimg_url'].$type[$v['news_type']] . '/' . $entry .'/'. $v['news_id']. '/106x106-'. $v['news_image'];
+                $v['news_image_carousel_278']       = $this->config['klimg_url'].$type[$v['news_type']] . '/' . $entry .'/'. $v['news_id']. '/278x185-'. $v['news_image'];
+                $v['news_image_location_raw']       = $type[$v['news_type']] . '/' . $entry .'/'. $v['news_id']. '/';
+                $v['news_type_name']                = $type[$v['news_type']];
+
+                // replace prefix brilio.net/en to brilio.net and delete non ascii character
+                if(isset($v['news_content'])){
+                    $v['news_content'] =  preg_replace('/[^\x0A\x20-\x7E]/', '', $v['news_content']);
+                }
+
+                if(isset($v['news_title'])){
+                    $v['news_title'] =  preg_replace('/[^\x0A\x20-\x7E]/', '', $v['news_title']);
+                }
+
+                if(isset($v['news_subtitle'])){
+                    $v['news_subtitle'] =  preg_replace('/[^\x0A\x20-\x7E]/', '', $v['news_subtitle']);
+                }
+
+                if(isset($v['news_synopsis'])){
+                    $v['news_synopsis'] =  preg_replace('/[^\x0A\x20-\x7E]/', '', $v['news_synopsis']);
+                }
+                //eof delete non ascii character
+
+                //read editor
+                if(isset($v['news_editor']))
+                {
+                    $author                       = json_decode($v['news_editor']);
+                    $author                       = $author[0];
+                    $v['author']['id']            = (isset($author->id) ? $author->id : '');
+                    $v['author']['user_fullname'] = (isset($author->user_fullname) ? $author->user_fullname : '');
+
+                    $v['author']['inisial_editor'] = '(brl/' . $this->widget->inisial_editor($v['author']['id']) . ')';
+                }
+
+                //read reporter
+                if(isset($v['news_reporter']))
+                {
+                    $reporter               = json_decode($v['news_reporter']);
+                    $reporter               = (count($reporter) ? $reporter[0] : []);
+                    $v['reporter']['id']    = (isset($reporter->id) ? $reporter->id : '');
+                    $v['reporter']['name']  = (isset($reporter->name) ? $reporter->name : '');
+                }
+
+                //function sponsor
+                if ( !empty($v['sponsor_tag'][0]) )
+                {
+                    $val = $v['sponsor_tag'][0];
+                    $split_time                   = explode(' ', $val['created_at']);
+                    $entry_brand                  = str_replace('-', '/', $split_time[0]);
+                    $firt_alpabhet                = substr(url_title($val['tag']), 0,1);
+                    $sponsor_temp['id']           = $val['id'];
+                    $sponsor_temp['brand_name']   = $val['brand_name'];
+                    $sponsor_temp['brand_url']    = $val['brand_url'];
+                    $sponsor_temp['tag_name']     = $val['tag'];
+                    $sponsor_temp['tag_alphabet'] = $firt_alpabhet;
+                    $sponsor_temp['tag_brand_url']      = $this->config['rel_url'].'brands/'.$firt_alpabhet.'/'.$val['url'];
+                    $sponsor_temp['brand_image']        = $this->config['klimg_url']. 'tag-sponsorship/'. $entry_brand.'/'. $val['id'].'/'.$val['image'] ;
+                    $v['sponsor_tag']   = $sponsor_temp;
+                }
+                //end sponsor tag
+
+                $row[$i] = $v;
+            }
+        }
+        return $row;
+    }
+
+    function gen_base_url()
+    {
+        $url = $this->config['base_url'];
+
+        {
+            $url   = str_replace(array("http://", 'https://'), '', $url);
+            $tmp   = explode('.', $url);
+            $first = current($tmp);
+            switch (true)
+            {
+                case ($first == 'www' || $first == 'dev'):
+                    $first = 'www';
+                    break;
+                case intval($first):
+                    $first = $first;
+                    break;
+                case (strpos($first, 'dev') === false):
+                    $first .= 'www';//'-dev';
+                    break;
+            }
+            $tmp[0] = $first;
+            $url    = 'https://' . implode('.', $tmp);
+        }
+        return $url;
+    }
+
+    function _editor_picks($cacheKey, $nama_halaman, $limit){
+        $limit = 4;
+        $interval = WebCache::App()->get_config('cachetime_short');
+        if ($ret = checkCache($cacheKey))
+            return $ret;
+
+        $_q = cache('query_'. $cacheKey, function() use ($limit) {
+        return News::join('tag_news', 'news_id', '=', 'tag_news_news_id')
+                  ->join('tags','tags.id','=','tag_news.tag_news_tag_id')
+                 ->where('news_domain_id', $this->config['domain_id'])
+                 ->where('news_level', 1)
+                 ->where('news_editor_pick', 1)
+                 ->where('news_date_publish', '<', date('Y-m-d H:i:s'))
+                 ->orderBy('news_date_publish', 'DESC')
+                 ->groupBy('news_id')
+                 ->take($limit)
+                ->get()
+                ->toArray();
+        }, $interval );
+
+        $_editor = $this->generate_news_url($_q);
+
+        $list_editor = [];
+        $no = 1;
+        foreach ($_editor as $key => $value) {
+            $list_editor[$key] = $_editor[$key];
+            $list_editor[$key]['no'] = $no;
+            $list_editor[$key]['TE'] = $nama_halaman;
+            $no++;
+            $list_editor[$key]['news_image_location_106'] = $value['news_image_106'];
+        }
+
+        $ret = $this->view($this->config['viewport'].'/box/right_editors_pick',['list_editor' => $list_editor], true);
+
+        setCache($cacheKey, $ret, $interval);
+
+        return $ret;
+
+    }
+
+    function _whats_hot ($nama_halaman){
+        $cacheKey = 'whats_hot_'. $nama_halaman;
+
+        $interval = WebCache::App()->get_config('cachetime_short');
+        $limit = 13;
+
+        if ($ret = checkCache($cacheKey))
+        {
+            return unserialize($ret);
+        }
+
+        $_query = cache('query_'. $cacheKey, function() use ($limit) {
+            return WhatHappen::where('what_happen_domain_id', $this->config['domain_id'])
+                    ->where('what_happen_flag', 1)
+                    ->where('what_happen_schedule', '<', 'what_happen_schedule_end')
+                    ->take($limit)
+                    ->orderBy('what_happen_order', 'ASC')
+                    ->get()
+                    ->toArray();
+        }, $interval);
+
+        $whats_hot = [];
+        foreach($_query as $key => $val)
+        {
+            $whats_hot[$key] = $_query[$key];
+
+            $split_img_path= explode('/', $val['what_happen_image']);
+            $filename= end($split_img_path);
+            unset($split_img_path[count($split_img_path) - 1]);
+            $temp = $this->config['klimg_url'] . implode('/', $split_img_path).'/278x185-'.$filename ;
+            $whats_hot[$key]['what_happen_image_location_full'] = $temp;
+        }
+
+        setCache($cacheKey, serialize($whats_hot), $interval);
+        return $whats_hot;
+    }
+
+    function _most_popular_new($cacheKey, $nama_halaman, $limit)
+    {
+        $interval = WebCache::App()->get_config('cachetime_short');
+        if ($ret = checkCache($cacheKey))
+        {
+            return $ret;
+        }
+
+        $tgl_sekarang       = date('Y-m-d');
+        $date               = date_create($tgl_sekarang);
+        date_add($date, date_interval_create_from_date_string('-2 day'));
+        $tgl_sebelumnya     = date_format($date, 'Y-m-d');
+
+        $q_most_popular_2_days_ago = cache($cacheKey, function() use ($limit, $tgl_sebelumnya) {
+            return Jsview::whereHas('News', function($q) use ($tgl_sebelumnya) {
+                        $q->where('news_domain_id', '3');
+                        $q->where('news_date_publish', '<', date('Y-m-d H:i:s'));
+                        $q->where('news_level', '1');
+                        $q->whereBetween('news_date_publish', [$tgl_sebelumnya, date('Y-m-d')]);
+                    })
+                    ->with(['News' => function ($q){
+                        $q->select('news_id', 'news_category' , 'news_url', 'news_title', 'news_type');
+                    }])
+                    ->orderBy('jsview_counter', 'DESC')
+                    ->take($limit)
+                    ->get()->toArray();
+        }, $interval );
+        $list_most_popular['LIST_MOST_POPULAR'] = '';
+
+        if(empty($q_most_popular_2_days_ago))
+        {
+            date_add($date, date_interval_create_from_date_string('-4 day'));
+            $tgl_sebelumnya     = date_format($date, 'Y-m-d');
+            $q_most_popular     = cache($cacheKey, function() use ($limit, $tgl_sebelumnya) {
+                return Jsview::whereHas('News', function($q) use ($tgl_sebelumnya) {
+                        $q->where('news_domain_id', '3');
+                        $q->where('news_date_publish', '<', date('Y-m-d H:i:s'));
+                        $q->where('news_level', '1');
+                        $q->whereBetween('news_date_publish', ['2016-01-25', date('Y-m-d')]);
+                        })
+                        ->with(['News' => function ($q){
+                            $q->select('news_id', 'news_category' , 'news_url', 'news_title', 'news_type');
+                        }])
+                        ->orderBy('jsview_counter', 'DESC')
+                        ->take($limit)
+                        ->get()->toArray();
+                }, 3600);
+        }
+        else
+        {
+            $q_most_popular = $q_most_popular_2_days_ago;
+        }
+
+        if(!empty($q_most_popular))
+        {
+            $no = 1;
+            foreach ($q_most_popular as $b) {
+                $category_meta = $this->_category($b['news']['news_category']);
+
+                $category = $category_meta['CATEGORY_URL'];
+
+                if ($b['news']['news_type'] == '1')
+                {
+                    $news_link = $this->config['base_url'] . 'photo/' . $category . '/' . $b['news']['news_url'] . '.html';
+                }
+                elseif ($b['news']['news_type'] == '2')
+                {
+                    $news_link = $this->config['base_url'] . 'video/' . $category . '/' . $b['news']['news_url'] . '.html';
+                }
+                else
+                {
+                    $news_link = $this->config['base_url'] . $category . '/' . $b['news']['news_url'] . '.html';
+                }
+
+                $most_popular_data["NO"] = $no;
+                $most_popular_data["NAMA_HALAMAN"] = $nama_halaman;
+                $most_popular_data["NEWS_TITLE"] = $b['news']["news_title"];
+                $most_popular_data["NEWS_URL"] = $news_link;
+                $list_most_popular['LIST_MOST_POPULAR'][] = $most_popular_data;
+                $no++;
+            }
+        }
+
+        $ret = $this->view('box/_most_popular', $list_most_popular, true);
+
+
+        setCache($cacheKey, $ret, $interval);
+
+        return $ret;
+
+    }
+
+    function _trending($limit, $TE)
+    {
+
+        $interval = WebCache::App()->get_config('cachetime_short');
+        $cacheKey = $this->config['viewport'].'_trending_' . $TE;
+        $limit = 7 ;
+
+        if ($ret = checkCache($cacheKey))
+        {
+            return $ret;
+        }
+
+        $two_days_ago    = date('Y-m-d',strtotime('- 2 days', time()));
+        $seven_days_ago = date('Y-m-d',strtotime('- 60 days', time()));
+        $q_trending = cache("query_trending_".$cacheKey, function() use ($two_days_ago, $seven_days_ago) {
+           return News::select('news_title',
+                        'news_id',
+                        'news_image',
+                        'news_image_thumbnail',
+                        'news_image_potrait',
+                        'news_entry',
+                        'news_date_publish',
+                        'news_category',
+                        'news_url',
+                        'news_type')
+                    ->where('news_domain_id', '=', $this->config['domain_id'])
+                    ->where('news_level', '=', '1')
+                    ->where('news_date_publish', '<=', $two_days_ago)
+                    ->where('news_date_publish', '>=', $seven_days_ago)
+                    ->orderby('news_date_publish', 'DESC')
+                    ->take(30)
+                    ->get()
+                    ->toArray();
+        }, $interval);
+
+        if(!empty($q_trending))
+        {
+            $random = array_rand($q_trending, $limit);
+
+            for($i=0; $i<$limit; $i++)
+            {
+                $trending[] = $q_trending[ $random[$i] ];
+            }
+
+            $no = 1;
+            foreach ($trending as $b)
+            {
+                $category_meta = $this->_category($b['news_category']);
+                $category = $category_meta['CATEGORY_URL'];
+
+                $entry = explode(' ', $b['news_entry']);
+                $entry = str_replace('-', '/', $entry[0]);
+                $type  = array('news', 'photonews', 'video');
+
+                if ($b['news_type'] == '1')
+                {
+                    $news_url = $this->config['rel_url'] . 'photo/' . $category . '/' . $b['news_url'] . '.html';
+                }
+                elseif ($b['news_type'] == '2')
+                {
+                    $news_url = $this->config['rel_url'] . 'video/' . $category . '/' . $b['news_url'] . '.html';
+                }
+                else
+                {
+                    $news_url = $this->config['rel_url'] . $category . '/' . $b['news_url'] . '.html';
+                }
+
+                $tmp["TE"]              = $TE;
+                $tmp["NO"]              = $no;
+                $tmp["NEWS_TITLE"]      = $b["news_title"];
+                $tmp["NEWS_URL"]        = $news_url;
+                $tmp["NEWS_IMAGE_URL"]  = $this->config['klimg_url']. $type[$b['news_type']] . '/' . $entry .'/'. $b['news_id']. '/200x100-'. $b['news_image_potrait'];
+
+                $list_trending[]   = $tmp ;
+                $no++;
+            }
+        }
+        else
+        {
+            $list_trending = [];
+        }
+
+        // $ret = $this->view($this->config['viewport'].'/box/_trending_box', ['trending' => $list_trending, 'TE' => $TE], true);
+        setCache($cacheKey, $ret, $interval);
+
+        return $ret;
+    }
+
+
+    function _check_this_out($nama_halaman, $limit)
+    {
+
+        $interval = WebCache::App()->get_config('cachetime_short');
+        $cacheKey = "desktop_check_this_out_".$nama_halaman;
+        if ($ret = checkCache($cacheKey))
+        {
+            return $ret;
+        }
+
+        $q_check_this_out = cache('query_'.$cacheKey, function() use ($limit){
+            return WhatHappen::groupBy('what_happen_id')
+                    ->where('what_happen_domain_id', '=', $this->config['domain_id'])
+                    ->where('what_happen_flag', '=', '1')
+                    ->take($limit)
+                    ->orderBy('what_happen_order', 'ASC')
+                    ->orderBy('what_happen_schedule', 'DESC')
+                    ->get()->toArray();
+        }, $interval );
+
+        if ($q_check_this_out) {
+            $no = 1;
+            foreach ($q_check_this_out as $b) {
+                $pecah      = explode("/", $b['what_happen_image']);
+                $folder     = $pecah[0];
+                $year       = $pecah[1];
+                $month      = $pecah[2];
+                $date       = $pecah[3];
+                $id         = $pecah[4];
+                $nama_file  = $pecah[5];
+                $ukuran     = '250x125';
+                $check_this_out_data["NO"]                      = $no;
+                $check_this_out_data["NAMA_HALAMAN"]            = $nama_halaman;
+                $check_this_out_data["WHAT_HAPPEN_URL"]         = $b["what_happen_url"];
+                $check_this_out_data["WHAT_HAPPEN_CONTENT"]     = $b["what_happen_content"];
+                $check_this_out_data["WHAT_HAPPEN_IMAGES"]      = $this->config['klimg_url'] . $folder . '/' . $year . '/' . $month . '/' . $date . '/' . $id . '/' . $ukuran . '-' . $nama_file;
+                $list_check_this_out['LIST_CHECK_THIS_OUT'][]   = $check_this_out_data;
+                $no++;
+            }
+        } else {
+            $list_check_this_out['LIST_CHECK_THIS_OUT'] = "";
+        }
+
+        $ret = $this->view($this->config['viewport'].'/box/right_check_this_out', $list_check_this_out, true);
+        setCache($cacheKey, $ret, $interval);
+
+        return $ret;
+    }
+
+    function _just_update($cacheKey, $TE){
+
+        $interval = WebCache::App()->get_config('cachetime_short');
+        $limit = 7;
+        if ($ret = checkCache($cacheKey))
+        {
+            return $ret;
+        }
+
+        $q_just_update = cache('query_'.$cacheKey, function() use ($limit){
+            return News::groupBy('news_id')
+                    ->where('news_domain_id', $this->config['domain_id'])
+                    ->where('news_date_publish', '<', date('Y-m-d H:i:s'))
+                    ->where('news_level', '1')
+                    ->orderBy('news_date_publish', 'DESC')
+                    ->take($limit)
+                    ->get()->toArray();
+        }, $interval);
+
+        $_just = $this->generate_news_url($q_just_update);
+
+        foreach ($_just as $key => $value) {
+            $_just[$key]['TE'] = $TE;
+        }
+        $ret = $this->view($this->config['viewport'].'/box/right_just_update', ['list_just_update' => $_just], true);
+
+        setCache($cacheKey, $ret, $interval);
+
+        return $ret;
+
+    }
+
+
+    function _category($category) {
+        $this->model("rubric_model");
+        $string = $category;
+        $pattern = '/([^0-9]+)/';
+        $replacement = '';
+        $category_id = preg_replace($pattern, $replacement, $string);
+
+        $cacheKey = 'category-' . $category_id;
+        if ($ret = checkCache($cacheKey))
+            return $ret;
+
+        $query_category = $this->rubric_model->get_category($category_id);
+
+        $ret['CATEGORY_ID'] = $query_category['rubrics_id'];
+        $ret['CATEGORY_TITLE'] = $query_category['rubrics_name'];
+        $ret['CATEGORY_URL'] = str_replace(' ', '-', strtolower($query_category['rubrics_common']));
+
+        $interval = WebCache::App()->get_config('cachetime_day');
+
+        setCache($cacheKey, $ret, $interval);
+
+        return $ret;
+    }
+
+    function _tag($tag_id) {
+        $this->model("tags_model");
+        $cacheKey = 'tag-' . $tag_id;
+        if ($ret = checkCache($cacheKey))
+            return $ret;
+
+        $query_tag = $this->tags_model->get_tag($tag_id);
+        if (count($query_tag) != 0) {
+            $huruf_awal = substr(strtolower($query_tag["tag_url"]), 0, 1);
+
+            $ret['TAG_TITLE'] = $query_tag['tag'];
+            $ret['TAG_URL'] = $this->config['rel_url'] . 'tag/' . $huruf_awal . '/' . $query_tag['tag_url'] . '/';
+        } else {
+            $ret['TAG_TITLE'] = '';
+            $ret['TAG_URL'] = '';
+        }
+
+        $interval = WebCache::App()->get_config('cachetime_day');
+        setCache($cacheKey, $ret, $interval);
+
+        return $ret;
+    }
+
+    function _splitter($data_content, $page = 1, $per_page = 5) {
+
+        $min = (($page * $per_page) - $per_page) + 1;
+        $max = $page * $per_page;
+        $count = 1;
+        $page_data = array();
+        foreach ($data_content as $item) {
+            if ($count >= $min && $count <= $max) {
+                $page_data[] = $item;
+            }
+            $count++;
+        }
+        $pages = ceil(count($data_content) / $per_page);
+        return array(
+            'DATA_CONTENT' => $page_data,
+            'JML_DATA' => $pages,
+            // 'HALAMAN' => $page
+            'HALAMAN' => str_replace('.html', '', $page)
+        );
+    }
+
+    function _sosmed($url) {
+        $sosmed_data['SOSMED_URL'] = $url;
+        return $this->view('tags/name/sosmed/_view', $sosmed_data, true);
+    }
+
+    function _set_box_get_more() {
+        return $this->view('box/_set_box_get_more',[],TRUE);
+    }
+
+}

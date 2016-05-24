@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html amp lang="id">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1"> 
+         <script type="application/ld+json">
+            {
+                "@context": "http://schema.org",
+                "@type": "NewsArticle",
+                "mainEntityOfPage": {
+                    "@type": "WebPage",
+                    "@id": "https://google.com/article"
+                },
+                "headline": "<?=(isset($meta['meta_title'])? $meta['meta_title'] : 'Stories worth sharing - Brilio.net')?>",
+                "image": {
+                    "@type": "ImageObject",
+                    "url": "<?= (isset($meta['og_image']) ? $meta['og_image'] : $this->config['assets_image_url'].'logo-BRILIO.png' ) ?>",
+                    "height": 498,
+                    "width": 996                    },
+                "datePublished": "<?php if(is_numeric($date_publish)) { echo date('Y-m-d H:i:s', $date_publish); } else { echo $date_publish; } ?>", 
+                "dateModified": "<?php if(is_numeric($date_publish)) { echo date('Y-m-d H:i:s', $date_publish); } else { echo $date_publish; } ?>", 
+                "author": {
+                    "@type": "Person",
+                    "name": "<?= (isset($meta['chartbeat_authors']) ? $meta['chartbeat_authors'] : 'Brilio.net' ) ?>"
+                },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "Brilio.net",
+                    "logo": {
+                        "@type": "ImageObject",
+                        "url": "<?php echo $this->config['base_url'] ?>assets/img/logo.png",
+                        "width": "236",
+                        "height": "66"
+                    }
+                },
+                "description": "<?=(isset($meta['meta_description'])? html_entity_decode($meta['meta_description']) : 'Brilio.net')?>"
+            }
+        </script>
+        <title><?=(isset($meta['meta_title'])? $meta['meta_title'] : 'Stories worth sharing - Brilio.net')?></title>
+        <meta name=description content="<?=(isset($meta['meta_description'])? html_entity_decode($meta['meta_description']) : 'Brilio.net')?>" />
+        <meta name=keywords content="<?=(isset($meta['meta_keywords'])? html_entity_decode($meta['meta_keywords']) : 'brilio, temukan, segala, kisah, kehidupan, gaya, hidup, renungan, inspirasi, dan, ilmu, pengetahuan, di, sini')?>" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-touch-fullscreen" content="yes" />
+        <meta name="google-site-verification" content="ULVoXU2ZG9IBdBiKMJLQhBjbyGUbnJ0T5zQoorgpsPw" />
+        <link rel="canonical" href="<?= $canonical ?>" />
+        <link href="<?= $this->config['assets_image_url'] ?>favicon.png" rel="shortcut icon" />
+        <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>
+                <!-- AMP Engine -->
+        <script async custom-element="amp-analytics" src="https://cdn.ampproject.org/v0/amp-analytics-0.1.js"></script>
+        <script async custom-element="amp-iframe" src="https://cdn.ampproject.org/v0/amp-iframe-0.1.js"></script>
+        <script async custom-element="amp-twitter" src="https://cdn.ampproject.org/v0/amp-twitter-0.1.js"></script>
+        <script async custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js"></script>
+        <script async custom-element="amp-facebook" src="https://cdn.ampproject.org/v0/amp-facebook-0.1.js"></script>
+        <script async src="https://cdn.ampproject.org/v0.js"></script>
+        <!-- end AMP Engine -->
+        <style amp-custom>
+            .article-left,.article-left-ads,.img-video{position:relative}a{text-decoration:none;color:#444}.clearfix:after,.clearfix:before,.container:after,.container:before{display:table;content:" "}.clearfix:after,.container:after{clear:both}.backtop,.banner,.banner320,.list-article-single-border>li,.list-pagination>li a,.navbar-header,.nextprev-paging a,.text-center,ul.artikel-paging-list>li{text-align:center}.bottom-tags-title-name,.comment-title,.cross-tags-title-name,.list-breadcrumb>li a,.title-list h6,.transform{text-transform:uppercase}.pull-left{float:left}.pull-right{float:right}:focus,:hover{outline:0}.instagram-media{float:left}.container{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}.header-br .img-headline,.title-list{display:block;position:relative}.list-channelbar>li a:after,.list-nav-footer>li a:after,.list-tab>li a:after{content:""}body,html{height:100%;color:#000}.list-unstyled{margin:0;padding:0;list-style:none}body{font-family:"Open Sans",Helvetica,Arial}.navbar{border-radius:0;margin:0;background-color:#FFF;border-bottom-width:1px;border-bottom-style:solid;border-bottom-color:#eaeaea}.navbar-header{float:none}.brand{float:left;padding:0 15px}.brand img{height:46px;margin-top:9px;margin-left:-10px}.img-full{width:100%;border-top:1px solid #ececec;border-bottom:1px solid #ececec}.header-br{margin-top:0}.deskrip-head{padding:15px 15px 20px}.deskrip-head-border-bottom{padding:15px 15px 50px;border-bottom-color:#ECECEC;border-bottom-style:solid;border-bottom-width:1px;float:left;width:100%;margin-bottom:20px}.kategori-date{margin-bottom:5px;margin-top:-7px}.kategori-date-ads{margin-bottom:0;margin-top:-7px}.link-kategori-ads{font-size:12px;color:#959595}.link-kategori{font-size:12px;color:#ED474B}.date{font-size:11px;color:#959595;float:left;width:100%;margin:10px 0 5px}.title-head{font-size:22px;font-weight:700;margin:0;color:#444;line-height:1.4em}.title-head a{color:#444}.banner img,.banner320 img{max-width:100%}.banner320{padding:25px 15px}.list-article-box{margin-top:0}.title-list{border-bottom:1px solid #ececec;padding:0 15px;z-index:2}.title-list h6{margin:0 0 -3px;padding:8px 0;font-size:20px;border-bottom:3px solid #ED474B;color:#000;display:inline-block;font-weight:700}.list-article-single-border>li a,.list-article-single>li a{font-size:16px}.article-left,.article-left-ads,.deskrip-br{display:table-cell;vertical-align:top;line-height:normal}.list-article-single>li{padding:15px;border-top:1px solid #ececec;text-align:center}.list-article-single>li:first-child{border:0}.list-article-berita>li{border-top:1px solid #ececec;padding:15px}.list-article-berita>li:first-child{border:0}.list-article-berita-read{margin-bottom:20px}.list-article-berita-read>li{border-top:1px solid #ececec;padding:15px}.list-article-berita-read>li:first-child{border:0}.list-article-single-border>li{padding:15px;border-top:1px solid #ececec}.list-article-single-border>li:first-child{border:0}.list-article-berita-border>li{border-top:1px solid #eaeaea;padding:15px}.title-tag a{color:#ED474B}.article-left{padding-right:10px}.article-left-ads{padding:0 10px 0 0}.deskrip-text{margin:0;font-size:15px;line-height:1.3em}.deskrip-text a{color:#000;font-size:15px}.deskrip-text-headline{margin:0;font-size:18px;line-height:1.3em}.deskrip-text-headline a{color:#000;font-size:18px}.deskrip-text-arial{margin:0;font-size:15px;line-height:1.3em}.deskrip-text-arial a{color:#000;font-family:arial;font-size:15px}.text-large{font-size:20px}.green{color:#98d300;border-color:#98d300}.list-number .article-left{padding:0;width:25px;font-size:30px;color:#d6d6d6}.list-article-double{border-bottom:1px solid #ececec}.list-article-small>li{border:0}.list-article-double .deskrip-text,.list-article-small .deskrip-text{font-size:17px}.list-pagination{display:table;margin:25px auto}.list-pagination>li{display:inline-block;margin-left:-1px}.list-pagination>li a{display:table-cell;vertical-align:middle;height:35px;width:35px;font-size:18px;color:#ED474B;border:1px solid #d8d8d8;font-weight:700;line-height:normal}.body-paragraph,.body-paragraph p,.headline-detail,.headline-detail .writer,.headline-detail h1,.img-detail,.sosmed-box{width:100%;float:left}.list-pagination>li .title{font-size:14px;padding:1px 15px 0}.list-pagination>li.active a,.list-pagination>li:hover a{border-color:#ED474B;background:#ED474B;color:#fff;z-index:9999}.headline-detail{padding-bottom:10px;padding-left:15px;padding-right:15px}.headline-detail h1{font-size:24px;font-weight:700;line-height:1.4em;padding:0;margin:0}.body-paragraph p,.deskrip-text a.popular{line-height:1.5em}.headline-detail .read-sinopsis{color:#666;float:left;width:100%;font-size:16px;margin:10px 0;line-height:1.5em}.headline-detail .writer{font-size:13px;color:#959595}.img-copy{padding-top:3%;padding-bottom:1%;font-size:13px;color:#8c8c8c;display:block}.sosmed-box{margin-top:15px}.body-paragraph{padding:5px 15px}.body-paragraph p{font-family:'PT Sans',sans-serif;font-size:17px;color:#292929;margin-bottom:10px;margin-top:10px;word-wrap:break-word}.body-paragraph a{color:#00A4EB}.list-article-rekomen>li{margin:10px 0;padding:5px 15px}.list-article-rekomen>li a{font-size:16px;color:#3b5998}.list-article-rekomen>li a:hover{color:#444}.list-tag>li{display:inline-block;margin:2px 0}.list-tag>li a{border:1px solid #d8d8d8;padding:5px 7px;display:block;font-size:12px;margin-right:5px;color:#7d7d7d}.list-tag>li a:hover{color:#fff;background:#ED474B}.detail-box{padding:0 15px;margin:10px 0}.read-box{padding:0 15px;margin:0}.list-share{margin-top:15px}.list-share>li{display:inline-block;margin:0 10px}.list-share>li a{background:url("<?php echo $this->config['assets_image_url'] ?>share-icon.png") -5px -4px no-repeat;width:61px;display:block;height:61px}.list-share>li:hover a{background-position:-5px -73px}.list-share>li a.twit{background-position:-75px -4px}.list-share>li:hover a.twit{background-position:-75px -73px}.list-share>li a.wa{background-position:-145px -4px}.list-share>li:hover a.wa{background-position:-145px -73px}ul.artikel-paging-list{overflow:hidden;max-width:100%;background:#000}ul.artikel-paging-list>li{float:left;border-right:1px solid #fff}ul.artikel-paging-list>li a{background:#000;color:#fff;font-weight:700;font-size:18px;height:35px;display:table-cell;vertical-align:middle;width:35px}ul.artikel-paging-list>li.intro a{width:67px;font-size:14px}ul.artikel-paging-list>li.intro-aktif a{background:#ED474B;width:67px;font-size:14px}ul.artikel-paging-list>li.arrow{float:right;border:0}ul.artikel-paging-list>li.arrow>div{border-left:2px solid #fff}ul.artikel-paging-list>li.arrow a{background:#ED474B;width:32px}.arrow-detail,ul.artikel-paging-list>li.arrow a:hover .arrow-detail{background:url("<?php echo $this->config['assets_image_url'] ?>Arrow-paging-n-prevnext-hov.png") no-repeat}.arrow-detail{height:19px;width:11px;display:block;margin:0 auto}.arrow-detail.arrow-right,ul.artikel-paging-list>li.arrow a:hover .arrow-detail.arrow-right{background-position:-19px 0}ul.artikel-paging-list>li.active a,ul.artikel-paging-list>li:hover a{background:#ED474B}ul.artikel-paging-list>li.arrow a:hover,ul.artikel-paging-list>li.intro:hover{background:#000}@media (max-width:319px){ul.artikel-paging-list>li a{width:21px}}.next-paging a{font-size:15px;display:inline-block;color:#fff;font-weight:700;padding:15px 40px 15px 15px}.prev-but{background:url("<?php echo $this->config['assets_image_url'] ?>arrowprev.png") left 25px center no-repeat #98d300}.prev-but:hover{background:url("<?php echo $this->config['assets_image_url'] ?>arrowprev.png") left 25px center no-repeat #f3f3f3}#next-but{background:url("<?php echo $this->config['assets_image_url'] ?>arrownext.png") right 13px center no-repeat #ED474B;color:#fffff}#next-but:hover{background:url("<?php echo $this->config['assets_image_url'] ?>arrownext-hov.png") right 13px center no-repeat #f3f3f3;color:#444}#next-but-split{background:url("<?php echo $this->config['assets_image_url'] ?>arrownext.png") right 17% center no-repeat #ED474B;width:30%;float:right}#next-but-split:hover{background:url("<?php echo $this->config['assets_image_url'] ?>arrownext-hov.png") right 17% center no-repeat #f3f3f3}#prev-but-split{background:url("<?php echo $this->config['assets_image_url'] ?>arrowprev.png") left 17% center no-repeat #ED474B;width:30%;float:left}#prev-but-split:hover{background:url("<?php echo $this->config['assets_image_url'] ?>arrowprev-hov.png") left 17% center no-repeat #f3f3f3}.next-paging img{margin-left:20px;float:right}.next-paging a:hover,.nextprev-paging a:hover{color:#444}.nextprev-paging{margin:20px 0}.nextprev-paging a{width:50%;float:left;border-left:1px solid #fff;font-size:15px;display:block;color:#fff;font-weight:700;padding:15px}.nextprev-paging a:first-child{border:0}.nextprev-paging img{margin:-2px 5px 0}.play{position:absolute;background:url("<?php echo $this->config['assets_image_url'] ?>play.png") no-repeat;width:96px;height:96px;margin:-48px auto 0;left:0;right:0;top:50%}.img-detail-foto p{font-size:15px;color:#333;padding:15px;margin:0}.artikel-paging-number{background:#ED474B;margin-bottom:50px}.artikel-paging-number .number{display:inline-block;font-weight:700}.artikel-paging-number .arrow-number-l a,.artikel-paging-number .arrow-number-r a{display:table-cell;vertical-align:middle;background:#ED474B}.arrow-br{background:url("<?php echo $this->config['assets_image_url'] ?>Arrow-paging-n-prevnext-hov.png") no-repeat;height:19px;width:11px;display:block;margin:0 auto}.artikel-paging-number a:hover .arrow-br{background:url("<?php echo $this->config['assets_image_url'] ?>Arrow-paging-n-prevnext.png") no-repeat}.artikel-paging-number a:hover .arrow-br.arrow-right{background:url("<?php echo $this->config['assets_image_url'] ?>Arrow-paging-n-prevnext.png") no-repeat;background-position: -19px 0;}.arrow-number-l a:hover,.arrow-number-r a:hover{background:#f3f3f3}.arrow-br.arrow-left{background-position:0 0}.arrow-br.arrow-right{background-position:-19px 0}.arrow-br-popular.arrow-left{background-position:0 0}.arrow-br-popular.arrow-right{background-position:-19px 0}footer{margin-top:30px}.backtop{padding:15px}.backtop a{font-size:14px}.backtop a img{}.list-nav-footer>li a{display:block;padding:15px;border-bottom:1px solid #ececec;position:relative;color:#ED474B;font-weight:700;font-size:18px}.list-nav-footer>li a:after{background:url(../img/Arrowmenu.png) no-repeat;position:absolute;right:15px;top:50%;margin-top:-12px;width:14px;height:24px}.copyright,.footer-logo,.footer-menu{background:#f4f4f4;text-align:center}.copyright p,.footer-menu a{font-size:12px;margin:0}.footer-logo{border-top:3px solid #ED474B;padding:15px}.footer-logo img{width:100px}.footer-menu{padding-top:5px;padding-bottom:15px}.footer-menu a{color:#000}.list-breadcrumb{padding:10px 15px;width:100%}.list-breadcrumb>li{display:inline-block;color:#959595;font-size:11px}.list-alphabet>li a,.list-tab>li a,.number-top p{display:table-cell;vertical-align:middle;text-align:center}.list-alphabet>li a,.list-tab>li a,.title-black,.title-green{font-size:18px;font-weight:700}.list-breadcrumb>li a{color:#959595}.title-green{margin:30px 0 10px;color:#98d300}.title-black{margin:30px 0 10px;color:#000}.text-bold{font-weight:700}.list-alphabet{padding:15px;margin-bottom:30px}.list-alphabet>li{float:left}.list-alphabet>li a{border:1px solid #fff;width:48px;height:48px;background:#DDD;color:#ED474B}.list-alphabet>li .select_tag,.list-alphabet>li a:hover{background:#ED474B;color:#fff}.list-tab>li{float:left;width:50%}.list-tab>li a{height:50px;padding:10px 5px;color:#676767;width:1%;position:relative}.list-tab>li.active a,.list-tab>li:hover a{color:#ED474B}.list-tab>li a:after{position:absolute;bottom:0;left:0;right:0;height:1px;background:#ececec;width:100%}.list-tab>li.active a:after,.list-tab>li:hover a:after{height:3px;background:#ED474B}.headline-popular{margin:0}.paging-number-popular{background:0 0;margin:0}.number-top p,.paging-number-popular a:hover{background:#ED474B}.artikel-paging-number .number{color:#FFF;font-size:15px;margin:14px 0}.artikel-paging-number .arrow-number-l a,.artikel-paging-number .arrow-number-l-popular a,.artikel-paging-number .arrow-number-r a,.artikel-paging-number .arrow-number-r-popular a{width:70px;height:51px}.arrow-number-l a,.arrow-number-l-popular a{border-right:1px solid #ececec}.arrow-number-r a,.arrow-number-r-popular a{border-left:1px solid #ececec}.number-top{position:absolute;top:0;left:0}.number-top p{margin:0;width:40px;height:40px;font-size:24px;font-weight:700;color:#fff}.list-article-popular .deskrip-text{font-size:15px}.article-left .number-top p{font-size:17px;width:30px;height:30px}.list-nav-most>li{border-top:1px solid #ececec}.list-nav-most>li a{display:block;padding:15px 15px 15px 47px;font-weight:700;font-size:15px;position:relative}.img-nav-most{background:url(../img/most-icon.png) no-repeat;position:absolute;left:15px;top:50%;margin-top:-15px;width:26px;height:29px}.img-liked{background-position:0 -29px}.img-comment{background-position:0 -57px}.img-shared{background-position:0 -85px}.navbar-fixed-top{display:none}.share-fixed{width:100%;background:#009e03;margin:0;position:fixed;top:-50px;height:47px;left:0;right:0;z-index:999;-webkit-transition:all .3s ease;-moz-transition:all .3s ease;-o-transition:all .3s ease;-ms-transition:all .3s ease;transition:all .3s ease}.share-fixed.active{top:0}.share-fixed>li{width:33.33%;height:47px;margin:0;float:left;-webkit-transition:all .3s ease;-moz-transition:all .3s ease;-o-transition:all .3s ease;transition:all .3s ease}.share-fixed>li a{width:100%;height:45px;text-align:center}.fb-icon,.tw-icon,.wa-icon{width:37px;height:50px;margin-left:auto;margin-right:auto}.share-fixed>li.fb,.share-fixed>li.fb:active,.share-fixed>li.fb:visited{background-color:#445fae}.share-fixed>li.twit,.share-fixed>li.twit:active,.share-fixed>li.twit:visited{background-color:#36b5ea}.share-fixed>li.wa,.share-fixed>li.wa:active,.share-fixed>li.wa:focus,.share-fixed>li.wa:visited{background-color:#009e03}.share-fixed>li a:hover{background:#ED474B}.fb-icon{background:url(../img/share-sticky.png) 10px 4px no-repeat}.tw-icon{background:url(../img/share-sticky.png) -44px 4px no-repeat}.wa-icon{background:url(../img/share-sticky.png) -94px 4px no-repeat}.auto-resizable-iframe{width:100%;padding-top:300px;padding-bottom:47px}.auto-resizable-iframe>div{padding-bottom:56.25%;padding-top:10px;height:0}.auto-resizable-iframe iframe{position:absolute;top:0;left:0;width:100%;height:100%}#fb-root{float:left;margin:0;padding:0}.pesan-error{float:left;width:94%;font-size:14px;color:#333;background-color:#FFF;text-align:center;padding-top:15px;padding-bottom:15px;border:1px solid #dadada;margin:15px 3%}#header-nav li a,.bootom-tags-list li a,.bottom-tags-title-line,.cross-tags-title-line{border-bottom-width:1px;border-bottom-style:solid}.navbar-nav-icon{float:right;width:40px;height:40px;margin-top:20px;margin-right:4px}.menu-icon{cursor:pointer;display:inline-block;width:35px;height:35px;float:left;margin-top:-1px}.menu-icon img{width:65%}.menu-icon .bar{background:#00A4EB;width:35px;height:5px;margin:5px 0 0}#header-nav li,#header-nav ul{width:100%;margin:0;padding:0}#header-nav{background-color:#FFF;position:absolute;z-index:98;width:100%;min-height:100px;display:none}#header-nav ul{display:block;float:left;list-style-type:none}#header-nav li{float:left}#header-nav .header-nav-close,#header-nav li a{width:100%;padding:15px;font-size:16px;float:left}#header-nav li a{color:#000;border-bottom-color:#EAEAEA}#header-nav li a:hover{color:#337AB7}#header-nav .header-nav-close{color:#000;background-color:#f5f5f5;text-align:center;font-weight:700;text-transform:uppercase}#nav-drop,.bottom-tags-title-name,.cross-tags-title-name{background-color:#FFF;position:absolute}#nav-drop{z-index:99;width:70px;height:62px;right:0;border-left-width:1px;border-left-style:solid;border-left-color:#eaeaea;display:none;top:0;cursor:pointer}.bootom-tags-list li,.bootom-tags-list li a,.bootom-tags-list ul,.bottom-tags,.bottom-tags-title,.bottom-tags-title-line,.box-float,.cross-tags-title,.cross-tags-title-line,.news-content p img{width:100%;float:left}#nav-drop img{margin-top:25px;margin-left:22px}.bottom-tags{margin-bottom:13px}.bottom-tags-title{height:35px;margin-top:40px}.bottom-tags-title-line{height:1px;border-bottom-color:#cdcdcd;margin-top:12px}.bottom-tags-title-name{float:left;font-size:20px;font-weight:700;color:#000;margin-top:-17px;z-index:1;padding:15px 15px 5px}.bootom-tags-list li,.bootom-tags-list ul{margin:0;padding:0}.bootom-tags-list{float:left;width:100%}.bootom-tags-list ul{display:block;list-style-type:none}.bootom-tags-list li a{padding:17px 15px;font-size:16px;color:#000;border-bottom-color:#ececec}.bootom-tags-list li a:hover{color:#337AB7}.nav-box{float:left;margin-bottom:10px}.posision{z-index:99;top:0}.news-content{padding-right:30px}.min-px{margin-left:-15px}.cross-tags-title{height:35px;margin-top:10px;margin-bottom:5px}.cross-tags-title-line{height:1px;border-bottom-color:#cdcdcd;margin-top:15px}.cross-tags-title-name{float:left;font-size:20px;font-weight:700;color:#000;z-index:1;padding-left:15px;padding-right:15px}.artikel-paging-number .arrow-number-l-popular a,.artikel-paging-number .arrow-number-r-popular a{display:table-cell;vertical-align:middle;height:50px;width:50px;background:#fff}.arrow-br-popular{background:url(../img/Arrow-paging-n-prevnext.png) no-repeat;height:19px;width:11px;display:block;margin:0 auto}.artikel-paging-number a:hover .arrow-br-popular{background:url(../img/Arrow-paging-n-prevnext-hov.png) no-repeat}.arrow-number-l-popular a:hover,.arrow-number-r-popular a:hover{background:#ED474B}.number-black{display:inline-block;color:#676767;font-size:18px;font-weight:700;margin:12px 0}.border-top{border-top:1px solid #ECECEC;margin-top:20px}.section-hardlink,.social-like{border-top:1px solid #ececec;border-bottom:1px solid #ececec;float:left}#nav{transition:.4s top cubic-bezier(.3,.73,.3,.74)}.comment-title{float:left;font-size:20px;font-weight:700;color:#000;padding:15px;width:100%}.deskrip-br-popular{display:table-cell;vertical-align:middle;line-height:normal}.w-120-h-60{background-color:#dadada;width:120px;height:60px;padding-right:10px}.list-article-berita img,.list-article-berita-border img{border:1px solid #ececec}iframe{width:100%}.section-hardlink{width:100%;margin-top:35px;padding:15px 5px}.section-hardlink span{padding-right:14px}.deskrip-head-index{padding:15px 15px 50px}.social-like-box{margin:0;padding:0 15px}.social-like{width:100%;padding-top:20px;padding-bottom:20px;text-align:center;font-family:"Open Sans",Helvetica,Arial;font-size:15px;font-weight:400;color:#000;margin-bottom:50px}.list-channelbar>li a,.title-channel{color:#333;font-size:13px;font-family:Lato,sans-serif}.channel-section{border-bottom:1px solid #ccc;position:relative;z-index:999999;padding-right:0;padding-left:0;margin-right:0;margin-left:0;max-width:100%}#channel-collapse{border-top:1px solid #f0f0f0;display:none}.list-channelbar>li a,.middle-channel{display:table-cell;height:50px;vertical-align:middle}.navbar-channel{background:#f9f9f9;font-family:Lato,sans-serif}.brilio-header-billboard-img,.brilio-header-billboard-title,.detail-statik-title,.office,.read-gateway-text,.redaksi-list,.redaksi-title,.sitemap a,.slide-title,.slide-undo{font-family:"Open Sans",Helvetica,Arial}.title-channel{font-weight:400;line-height:normal;margin:0;padding:0 15px}.click-channel{width:50px;text-align:center}.list-channelbar{padding:0 5px;margin:0;list-style:none}.list-channelbar>li{float:left;width:50%;padding:0 5px;position:relative}.list-channelbar>li a{border-bottom:1px solid #f0f0f0;width:1%;padding:0 16px 0 5px}.list-channelbar>li a:hover,.list-channelbar>li.active a{font-weight:900}.list-channelbar>li a:after{background:url("<?php echo $this->config['assets_image_url'] ?>channel_arrow_right.png") -1px -1px no-repeat;width:6px;height:10px;position:absolute;right:10px;top:50%;margin-top:-5px;background-size:6px 12px}.logo-channel{margin:20px 15px;text-align:center}.click-channel .close-channel,.click-channel.collapsed .icon-channel{display:none}.click-channel .icon-channel,.click-channel.collapsed .close-channel{display:block;margin:0 auto}@media (min-width:768px){.list-channelbar>li{width:25%}}.brilio-header-billboard{display:table;width:100%;background-color:#ea474c}.brilio-header-billboard-img,.brilio-header-billboard-title{display:table-cell;vertical-align:middle;font-size:14px;font-weight:700;left:0}.brilio-header-billboard-title{width:74px;max-width:74px;color:#FFF;line-height:15px;background:url("<?php echo $this->config['assets_image_url'] ?>/arrow_w.png") right center no-repeat;padding:15px}.brilio-header-billboard-img{width:60px;color:#FFF;padding:10px 15px;max-width:60px}.brilio-header-billboard-wording,.brilio-header-billboard-wording-gateway{display:table-cell;font-family:"Open Sans",Helvetica,Arial;font-size:13px;line-height:15px;text-align:left;font-weight:600;color:#FFF;vertical-align:middle}.brilio-header-billboard-wording{padding-left:10px;padding-right:15px}.brilio-header-billboard-wording a{color:#FFF}.brilio-header-billboard-wording-gateway{padding:10px}.redaksi,.sitemap{padding:20px;width:100%}.redaksi-list,.redaksi-title{width:100%;font-size:16px}.brilio-header-billboard-wording-gateway a{color:#FFF}.redaksi-title{color:#555;font-weight:700}.redaksi-list{color:#555;margin-bottom:30px}.detail-statik-title,.office,.sitemap a{font-size:18px;width:100%}.sitemap{border-bottom:1px solid #ececec}.sitemap a{color:#555;padding-top:5px;padding-bottom:5px}.sitemap li,.sitemap ul{width:100%}.float-left{float:left}.detail-statik-title{color:#000;font-weight:700;text-align:center;margin-bottom:10px}.office{color:#555;padding:20px}.read-gateway{padding:35px 2px 0}.read-gateway-img{width:100%;text-align:center}.read-gateway-text{width:100%;text-align:center;font-size:17px;font-weight:200;color:#1F93D0}.slide-title,.slide-undo{font-size:13px;margin-top:-3px}.read-gateway-text a{color:#1F93D0}.slide-notifikasi{background-color:#000;width:100%;display:none;padding:10px 15px}.slide-title{color:#FFF;margin-right:5px}.slide-undo{color:#3CF}.footer-lang-title,.lang-title{font-family:'PT Sans',sans-serif;font-size:12px}.slide-undo a{color:#3CF;text-decoration:underline}.footer-lang-title a,.footer-lang-title a:hover,.footer-lang-title:hover,.lang-title{color:#ED474B}.slide-close{right:0}.slide-close img{width:15px}.navbar-lang-icon{float:right;width:80px;height:40px;margin-top:20px;margin-right:18px}.lang-title{text-align:right;float:right;margin-top:4px;margin-right:10px}.lang-icon{cursor:pointer;display:inline-block;width:40px;height:40px;float:right;margin-top:-2px}.kolom-brand,.kolom-brand-partner,.split-x{float:left}.kolom-brand-add,.kolom-brand-brilio{margin-top:10px;float:left}.lang-icon img{width:75%}.switch-language-top{display:block}.footer-lang{background:#f4f4f4;text-align:center;padding-top:5px;padding-bottom:35px;margin-bottom:-20px;}.footer-lang img{width:40px;margin-left:15px}.footer-lang-title{color:#ED474B;margin-right:-10px}.kolom-brand{margin-right:10px;height:45px}.kolom-brand-add{font-family:"Open Sans",Helvetica,Arial;font-size:20px;color:#959595;width:30px;text-align:center;vertical-align:middle}.news-content ul{display:inline-block}#survey-frame{height:100%}.split-x{width:50%;height:1px}#section-split{margin-right:30px}.footer-lang a {color: #ED474B;display: inline-block;vertical-align: middle;}.title-bg{background:url("<?php echo $this->config['assets_image_url'] ?>bg-promo-video-mobile.jpg") no-repeat;padding:15px;font-size:18px;color:#252525;text-shadow:1px 1px #000;background-size:cover}.share-video{padding:15px 0;border-bottom:1px solid #ececec;margin:0 15px}.share-video .share-text,.share-video .yt-share{display:table-cell;vertical-align:middle;padding-right:10px}.share-video .share-text{font-size:15px;color:#252525;font-weight:600}.deskrip-video{padding:15px;font-size:15px;color:#252525;line-height:1.5em}
+        </style>
+        <!--SOCMED PROPERTY-->
+        <meta property="og:site_name" content="brilio.net" />
+        <meta property="og:title" content="<?=(isset($meta['meta_title'])? html_entity_decode($meta['meta_title']) : 'Stories worth sharing - Brilio.net')?>" />
+        <meta property="og:description" content="<?=(isset($meta['meta_description'])? html_entity_decode($meta['meta_description']) : 'Brilio.net')?>" />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content="<?=(isset($meta['og_url'])? $meta['og_url'] : $this->config['base_url'] )?>" />
+        <meta property="og:image" content="<?= (isset($meta['og_image']) ? $meta['og_image'] : $this->config['assets_image_url'].'logo-BRILIO.png' ) ?>" />
+        <meta property="og:image:secure_url" content="<?= (isset($meta['og_image_secure']) ? $meta['og_image_secure'] : $this->config['assets_image_url'].'logo-BRILIO.png' ) ?>" />
+        <meta property="fb:app_id" content="834884736607990" />
+        <meta property="fb:admins" content="1560920678" />
+        <meta name="twitter:title" content="<?=(isset($meta['meta_title'])? html_entity_decode($meta['meta_title']) : 'Stories worth sharing - Brilio.net')?>" />
+        <meta name="twitter:description" content="<?=((@$meta['meta_description'])? html_entity_decode($meta['meta_description']) : 'Brilio.net')?>" />
+        <meta name="twitter:image" content="<?= (isset($meta['og_image']) ? $meta['og_image'] : $this->config['assets_image_url'].'logo-BRILIO.png' ) ?>" />
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@brilionet">
+        <meta name="twitter:creator" content="@brilionet">
+        <meta name="twitter:domain" content="https://twitter.com/brilionet">
+</head>
+<body>
+    <!-- Google Analytics -->
+    <amp-analytics type="googleanalytics" id="analytics1">
+        <script type="application/json">
+        {
+            "vars": {
+                "account": "UA-61119040-2"
+            },
+            "triggers": {
+                "trackPageview": {
+                    "on": "visible",
+                    "request": "pageview"
+                }
+            }
+        }
+        </script>
+    </amp-analytics>
+    <div class="channel-section">
+        <div class="navbar-channel clearfix">
+            <div class="pull-left">
+                <h6 class="title-channel middle-channel">KAPANLAGI NETWORK</h6>
+            </div>
+            <div class="button-channel pull-right">
+                <a href="#" class="click-channel middle-channel">
+                    <amp-img src="<?= $this->config['assets_image_url']?>dot_aa2.png" width="3" height="10" class="icon-channel"/>
+                    <amp-img src="<?= $this->config['assets_image_url']?>channel_close.png" width="16" height="10" class="close-channel" />
+                </a>
+            </div>
+        </div>
+        <div id="channel-collapse">
+            <ul class="list-channelbar clearfix">
+                <li class="active"><a href="<?= $this->config['rel_url'] ?>brilio.net/"  >BRILIO.NET</a></li>
+                <li><a href="http://m.kapanlagi.com/" target="_blank" >KAPANLAGI</a></li>
+                <li><a href="http://m.bola.net/"  >BOLA.NET</a></li>
+                <li><a href="http://m.merdeka.com/"  >MERDEKA</a></li>
+                <li><a href="http://m.vemale.com/"  >VEMALE</a></li>
+                <li><a href="http://m.fimela.com/"  >FIMELA</a></li>
+                <li><a href="http://m.otosia.com/"  >OTOSIA</a></li>
+                <li><a href="http://feed.id/"  >FEED.ID</a></li>
+                <li><a href="http://m.hemat.com/"  >HEMAT</a></li>
+                <li><a href="http://m.techno.id/"   >TECHNO.ID</a></li>
+                <li><a href="http://m.sooperboy.com/"  >SOOPERBOY</a></li>
+                <li><a href="http://m.muvila.com/"   >MUVILA</a></li>
+                <li><a href="http://m.dream.co.id/">DREAM.CO.ID</a></li>
+            </ul>
+            <div class="logo-channel">
+                <a href="http://www.kln.id/" ><amp-img src="<?= $this->config['assets_image_url']?>logo_KLN.png" width="86" height="46"></amp-img></a>
+            </div>
+        </div>
+    </div>
+    <!--navbar-->
+    <nav class="navbar">
+        <div class="brand">
+            <a href="<?= $this->config['base_url'] ?> ">
+                <amp-img src="<?= $this->config['assets_image_url']?>logo-atas.png" width="122" height="46"></amp-img>
+            </a>
+        </div>
+        <div class="navbar-nav-icon" id="show-nav">
+            <div class="menu-icon">
+                <amp-img src="<?= $this->config['assets_image_url']?>menu-icon.png" width="22" height="10"></amp-img>
+            </div>
+        </div>
+        <div id="nav-drop" class="hide-nav">
+            <amp-img src="<?= $this->config['assets_image_url']?>arrow-top.png" width="2" height="50"></amp-img>
+        </div>
+        <div class="navbar-lang-icon clearfix">
+            <a href="<?=  $this->config['m_url_en']?>" id="switch-language-top">
+                <div class="lang-icon">
+                    <amp-img src="<?= $this->config['assets_image_url']?>en-button-mob.png" width="40" height="30"></amp-img>
+                </div>
+                <div class="lang-title">New!</div>
+            </a>
+        </div>          
+    </nav>
+    <!--end-navbar-->
+    <div id="header-nav">
+    <ul>
+        <?= $tags_top?>
+        <li>
+            <a href="#" class="header-nav-close hide-nav">Close</a>
+        </li>
+    </ul>            
+    </div>
+    <?php if(!empty($box_announcer)) echo $box_announcer?>
+    <?= $content ?>
+    <!--footer-->
+    <footer>
+        <div class="backtop">
+            <a href="#">
+                <amp-img src="<?= $this->config['assets_image_url'] ?>Arrowbacktotop.png" width="20" height="11"></amp-img> 
+                BACK TO TOP
+            </a>
+        </div>
+        <div class="footer-logo">
+            <a href="http://www.kln.id/">
+                <amp-img src="<?= $this->config['assets_image_url'] ?>KLN-640.png" width="100" height="60"></amp-img>
+            </a>
+        </div>
+        <div class="copyright">
+            <p>2016 Brillio.net
+                <br>KLN Kapanlagi Network - All Rights Reserved</p>
+        </div>
+        <div class="footer-menu">
+            <a href="#">About Brilio</a> |
+            <a href="<?= $this->config['rel_url'] ?>company/redaksi">Redaksi</a> |
+            <a href="http://www.brilio.net/news/kesempatan-bergabung-bersama-brilionet-sekarang-juga-1511243.html">Karir</a> |
+            <a href="<?= $this->config['rel_url'] ?>company/sitemap">Sitemap</a>
+        </div>
+        <div class="footer-lang clearfix">
+            <a href="#" class="footer-lang-title">New!</a>
+            <a href="<?= $this->config['m_url_en'] ?>" class="">
+                <amp-img src="<?= $this->config['assets_image_url'] ?>en-button-mob.png" width="60" height="37"></amp-img>
+            </a>
+            <a href="<?= $this->config['rel_url'] ?>" class="">
+                <amp-img src="<?= $this->config['assets_image_url'] ?>in-button-mob.png" width="60" height="40"></amp-img>
+            </a> 
+        </div>            
+    </footer>
+    <!--end footer-->
+    <amp-iframe src="https://d.kapanlaginetwork.com/mga.html?<?= (isset($meta['iframe_kl'])? $meta['iframe_kl'] : 'https://www.brilio.net')?>" height="1" width="1"  sandbox="allow-same-origin allow-scripts"></amp-iframe>
+    <noscript>
+        <amp-img width="0" height="0" src="http://beta.newshub.id/app/record_jsview/" /></amp-img>
+    </noscript>
+</body>
+</html>

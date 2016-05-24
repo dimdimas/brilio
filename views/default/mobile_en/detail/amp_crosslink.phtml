@@ -1,0 +1,20 @@
+<?php if ($cross): ?>
+<div class="list-article-box min-px">
+		<div class="cross-tags-title">
+		<div class="cross-tags-title-line"></div>
+			<div class="cross-tags-title-name"><?= ((@$cross['news_related_title'])? html_entity_decode($cross['news_related_title']) : 'RECOMMENDED')?></div>
+		</div>
+    <div class="box-float">
+        <ul class="list-article-rekomen list-unstyled">
+    		<?php $related = json_decode($cross['news_related_content']);
+			    foreach ($related as $key): 
+			    $tmp = explode('|', $key); ?>
+						<li>
+					    <a href="<?= $tmp[1] ?>" target="_blank"><?= $tmp[0] ?></a>
+						</li>  
+			    <?php endforeach ?>        
+        </ul>
+    </div>
+</div>
+<?php endif ?>
+

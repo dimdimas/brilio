@@ -1,0 +1,82 @@
+<!--carousel-->
+<div class="slider-owl">
+    <div class="navigation">
+        <a class="prev"><span class="arrow-left"></span></a>
+        <a class="next"><span class="arrow-right"></span></a>
+    </div>
+    <div class="owl-carousel">
+        <?php foreach ($whats_hot as $key): ?>
+            <div class="slide"> 
+            <a href="<?= $key['what_happen_url'] ?>">
+                <img src="<?= $key['what_happen_image_location_full']  ?>" onerror="this.src='http://placehold.it/278x150'" /> 
+                <div class="deskrip-slide">
+                    <p><?= $key['what_happen_content'] ?></p>
+                </div>
+            </a>
+            </div>
+        <?php endforeach ?>
+    </div>
+</div>
+<!--endcarousel-->
+
+<!--breadcrumb-->
+<ol class="list-breadcrumb  list-unstyled">
+    <li><a href="<?= $this->config['rel_url'] ?>">BRILIO.NET</a></li>
+    <li>&raquo;</li>
+    <li><a href="<?= $this->config['rel_url'] ?>">SEARCH RESULT</a></li>
+</ol>
+<!--endbreadcrumb-->
+<!--wrapper-->
+<div class="wrapper-col">
+    <div id="search_result" style="padding:0px;margin:0px;width: 100%;">&nbsp;</div>
+
+    <div class="wrapper-right">
+        <div class="article-col-right">
+            <?= $collect_email ?>
+        </div>
+        <div class="article-col-right">
+            <?= $trending ?>
+        </div>
+    </div>
+</div>
+<!--endwrapper-->
+
+<?//= $news_more_stories ?>
+<input type="hidden" id="news_url_full" value="<?= $news_data['news_url_with_base'] ?>"/>
+
+<script src="https://www.google.co.id/jsapi" type="text/javascript"></script>
+    <script type="text/javascript">
+
+                    google.load('search', '1', {
+                        language: 'id',
+                        style: google.loader.themes.V2_DEFAULT
+                    });
+                    google.setOnLoadCallback(function () {
+                        var customSearchOptions = {};
+                        var customSearchControl = new google.search.CustomSearchControl('018396705198293471577:nuqlwwz6bzw', customSearchOptions);
+                        var drawOptions = new google.search.DrawOptions();
+                        drawOptions.setDrawMode(customSearchControl.DRAW_MODE_TABBED);
+                        drawOptions.setSearchFormRoot(document.getElementById("cse-hidden"));
+                        OnSearchComplete = function (sc, searcher) {
+                            $('#search_result').show();
+                            $('.gsc-search-box').hide();
+                            $('.gsc-branding').hide();
+
+                            $('.gsc-control-wrapper-cse').css("padding", "0px");
+                            $('.gsc-control-wrapper-cse').css("margin", "0px");
+                            $('.gs-result').css("padding", "5px 0px");
+                            $('.gsc-cursor-page').css("fontSize", "20px");
+                            //$('.gsc-cursor').append('<div style="font-size: 20px;" tabindex="0" class="gsc-cursor-page">NEXT</div>');                             
+
+                            $('html, body').animate({
+                                scrollTop: $("#search_result").offset().top
+                            }, 1000);
+                        }
+                        customSearchControl.setSearchCompleteCallback(this, OnSearchComplete);
+                        customSearchControl.setResultSetSize(google.search.Search.FILTERED_CSE_RESULTSET);
+                        customSearchControl.draw('search_result', drawOptions);
+                        $(function () {
+                            customSearchControl.execute('<?php echo $NEWS ?>');
+                        });
+                    }, true);
+    </script>

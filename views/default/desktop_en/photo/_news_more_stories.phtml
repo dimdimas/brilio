@@ -1,0 +1,33 @@
+<?php if ($related_news_list): ?>
+<!--more-stories-->
+<div class="section-full container">
+    <div class="title-border">
+        <h4 class="title-line">MORE STORIES</h4>
+    </div>
+    <div class="row">
+        <ul class="content-news list-unstyled clearfix" id="more-news">
+        <?php
+        $no = 1;
+        foreach ($related_news_list as $key ): ?>
+        <li class="col-sm-6 col-md-3" style="display: none">
+            <a href="<?php echo $key['news_url_full'] ?>" onclick="ga('send', 'event', '<?= $TE?>', 'More stories', 'Artikel ke-<?= $no ?>');" class="img-block lazy">
+              <img src="<?php echo $key['news_image_location'].'360x180-'.$key['news_image_potrait'] ?>"
+                data-src="<?php echo $key['news_image_location'].'360x180-'.$key['news_image_potrait'] ?>"
+                id="320"
+                onerror="imgError(this)">
+              </a>
+            <div class="deskrip-block">
+                <p class="text-article text-sm"><a href="<?php echo $key['news_url_full'] ?>" onclick="ga('send', 'event', '<?= $TE?>', 'More stories', 'Artikel ke-<?= $no ?>');"><?php echo $key['news_title'] ?></a></p>
+            </div>
+        </li>
+        <?php
+        $no++;
+        endforeach ?>
+        </ul>
+    </div>
+</div>
+<!--endmorestories-->
+<!--showmore-->
+<a href="#" class="showmore floating" id="load-more"  onclick="ga('send', 'event', 'Detail foto', 'Show more', 'Show more');"  ><img src="<?= $this->config['assets_image_url_v2']?>brlilio-icon.png" width="42"> <br>Show More Stories</a>
+<!--endshowmore-->
+<?php endif ?>

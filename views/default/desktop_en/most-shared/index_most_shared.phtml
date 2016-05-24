@@ -1,0 +1,138 @@
+<!-- breadcrumb-->
+<ol class="list-breadcrumb  list-unstyled">
+<?php if ($BREADCRUMB['init'] == 'A'): ?>
+    <li>
+        <a href="<?= $this->config['rel_url'] ?>" onclick="ga('send', 'event', 'Most Shared  - Breadcrumb', 'Click', 'BRILIO.NET');">BRILIO.NET</a>
+    </li>
+    <li>&raquo;</li>
+    <li>
+        <a href="<?= $this->config['rel_url'] ?>most-shared/" onclick="ga('send', 'event', 'Most Shared - Breadcrumb', 'Click', 'Most Shared');">MOST SHARED</a>
+    </li>
+<?php elseif ($BREADCRUMB['init'] == 'B')  : ?>
+    <li>
+        <a href="<?= $this->config['rel_url'] ?>" onclick="ga('send', 'event', 'Most Shared - Breadcrumb', 'Click', 'BRILIO.NET');">BRILIO.NET</a>
+    </li>
+    <li>&raquo;</li>
+    <li>
+        <a href="<?= $this->config['rel_url'] ?>most-shared/" onclick="ga('send', 'event', 'Most Shared - Breadcrumb', 'Click', 'Most Shared');">MOST SHARED</a>
+    </li>
+    <li>&raquo;</li>
+    <li>
+        <a href="<?= $this->config['rel_url'] ?>most-shared/<?= $BREADCRUMB['TAHUN'] ?>/" onclick="ga('send', 'event', 'Most Shared - Breadcrumb', 'Click', '<?= $BREADCRUMB['TAHUN'] ?>');"><?= $BREADCRUMB['TAHUN'] ?></a>
+    </li>
+<?php else: ?>
+    <li>
+        <a href="<?= $this->config['rel_url'] ?>" onclick="ga('send', 'event', 'Most Shared - Breadcrumb', 'Click', 'BRILIO.NET');">BRILIO.NET</a>
+    </li>
+    <li>&raquo;</li>
+    <li>
+        <a href="<?= $this->config['rel_url'] ?>most-shared/" onclick="ga('send', 'event', 'Most Shared - Breadcrumb', 'Click', 'Most Shared');">MOST SHARED</a>
+    </li>
+    <li>&raquo;</li>
+    <li>
+        <a href="<?= $this->config['rel_url'] ?>most-shared/<?php echo $BREADCRUMB['TAHUN'] . '/' . $BREADCRUMB['BULAN'] . '/' . $BREADCRUMB['TANGGAL'] . '/' ?>" onclick="ga('send', 'event', 'Most Shared - Breadcumb', 'Click', '<?php echo $BREADCRUMB['TANGGAL_FORMAT'] ?>');"><?php echo $BREADCRUMB['TANGGAL_FORMAT'] ?></a>
+    </li>
+<?php endif ?>
+</ol>
+<!--endbreadcrumb-->
+<!--wrapper-->
+<div class="wrapper-col">
+    <div class="wrapper-left">
+            <h5 class="title-single">MOST SHARED</h5>
+        <div class="trending-most-box">
+            <ul class="list-most list-unstyled clearfix">
+                <li <?php echo $MENU_TYPE_DATE['CLASS_TODAY'] ?>>
+                    <a href="<?php echo $MENU_TYPE_DATE['URL_TODAY'] ?>/" onclick="ga('send', 'event', 'Most Shared - Switch trending', 'Click', 'TOP DAILY');">TOP DAILY</a></li>
+                <li <?php echo $MENU_TYPE_DATE['CLASS_WEEK'] ?>>
+                    <a href="<?php echo $MENU_TYPE_DATE['URL_WEEK'] ?>/" onclick="ga('send', 'event', 'Most Shared - Switch trending', 'Click', 'TOP WEEKLY');">TOP WEEKLY</a>
+                </li>
+            </ul>
+            <div class="artikel-paging-popular clearfix">
+
+            <?php if ($MENU_PER_DATE['init'] == 'sebelum'): ?>
+                <a  href="<?php echo $this->config['rel_url'] ?>most-shared/<?php echo $MENU_PER_DATE['VIEW_MENU_PER_DATE']['TANGGAL_SEBELUM_SEKARANG_FORMAT'] ?>/" onclick="ga('send', 'event', 'Most Shared  - Date top', 'click', 'PREV');" class="arrow-popular-l">
+                    <span class="arrow-most arrow-left"></span>
+                </a>
+                <div class="date-popular"><?php echo $MENU_PER_DATE['VIEW_MENU_PER_DATE']['TANGGAL_SEKARANG_FORMAT'] ?></div>
+                <a href="#" class="arrow-popular-r">
+                    <span class="arrow-most arrow-right"></span>
+                </a>
+            <?php elseif ($MENU_PER_DATE['init'] == 'sesudah') : ?>
+                <a href="<?php echo $this->config['rel_url'] ?>most-shared/<?php echo $MENU_PER_DATE['VIEW_MENU_PER_DATE']['TANGGAL_SEBELUM_VISIT_FORMAT'] ?>/" onclick="ga('send', 'event', 'Most Shared - Date top', 'click', 'PREV');" class="arrow-popular-l">
+                    <span class="arrow-most arrow-left"></span>
+                </a>
+                <div class="date-popular"><?php echo $MENU_PER_DATE['VIEW_MENU_PER_DATE']['TANGGAL_VISIT_FORMAT'] ?></div>
+                <a href="<?php echo $this->config['rel_url'] ?>most-shared/<?php echo $MENU_PER_DATE['VIEW_MENU_PER_DATE']['TANGGAL_SESUDAH_VISIT_FORMAT'] ?>/" onclick="ga('send', 'event', 'Most Shared - Date top', 'click', 'NEXT');" class="arrow-popular-r">
+                    <span class="arrow-most arrow-right"></span>
+                </a>
+            <?php endif ?>
+            </div>
+        </div>
+        <div class="article-col-left">
+            <ul class="article-border list-unstyled">
+                <?php if (isset($NEWS['ERROR'])): ?>
+                    <?php echo $NEWS['MESSAGE']; ?>
+                <?php else : ?>
+                    <li class="article-block">
+                    <a href="<?php echo $NEWS[0]['NEWS_URL'] ?>" onclick="ga('send', 'event', 'Most Shared - Stream', 'click', '<?php echo $NEWS[0]['NEWS_TITLE'] ?>');" class="article-left">
+                        <img src="<?php echo $NEWS[0]['NEWS_IMAGES'] ?>" data-src="<?php echo $NEWS[0]['NEWS_IMAGES'] ?>" id="300" onerror="imgError(this)" class="img-full">
+                        <div class="number-large"><span>1</span></div>
+                    </a>
+                    <div class="deskrip-right">
+                        <a href="<?php echo $NEWS[0]['TAGS_URL'] ?>" onclick="ga('send', 'event', 'Most Shared - Stream', 'click', '<?php echo $NEWS[0]['NEWS_TITLE'] ?>');" class="link-kategori"><?php echo $NEWS[0]['TAGS_TITLE'] ?></a>
+                        <p class="text-article"><a href="<?php echo $NEWS[0]['NEWS_URL'] ?>" onclick="ga('send', 'event', 'Most Shared - Stream', 'click', '<?php echo $NEWS[0]['NEWS_TITLE'] ?>');" ><?php echo $NEWS[0]['NEWS_TITLE'] ?></a></p>
+                        <span class="date"><?php echo $NEWS[0]['NEWS_ENTRY'] ?></span>
+                        <p class="text-body"><?php echo $NEWS[0]["NEWS_SYNOPSIS"] ?></p>
+                    </div>
+                    </li>
+                    <div class="sosmed-popular" style="margin-top: -20px;">
+                        <?php echo $SOSMED ?>
+                    </div>
+                <?php endif ?>
+                <?php if ( !isset($NEWS['ERROR']) AND count($NEWS) > 1): unset($NEWS[0]); ?>
+                <?php foreach ($NEWS as $key): ?>
+                    <li>
+                        <a href="<?php echo $key['NEWS_URL'] ?>" class="article-left">
+                            <img src="<?php echo $key['NEWS_IMAGES'] ?>" data-src="<?php echo $key['NEWS_IMAGES'] ?>" id="180" onerror="imgError(this)" class="img-full">
+                            <div class="number-small"><span><?= $key['NO']?></span></div>
+                        </a>
+                        <div class="deskrip-right">
+                            <a href="<?php echo $key['TAGS_URL'] ?>" class="link-kategori"><?php echo $key['TAGS_TITLE'] ?></a>
+                            <p class="text-article text-sm"><a href="<?php echo $key['NEWS_URL'] ?>"><?php echo $key['NEWS_TITLE'] ?></a></p>
+                            <span class="date"><?php echo $key['NEWS_ENTRY'] ?></span>
+                        </div>
+                    </li>
+
+                <?php endforeach ?>
+            </ul>
+            <?php endif ?>
+        </div>
+        <ul class="list-nav-mov list-unstyled">
+            <li><a href="<?= $this->config['rel_url']. 'popular' ?>">POPULAR</a></li>
+            <li><a href="<?= $this->config['rel_url']. 'most-liked' ?>">MOST LIKED</a></li>
+            <li><a href="<?= $this->config['rel_url']. 'most-commented' ?>">MOST COMMENTED</a></li>
+            <li><a href="<?= $this->config['rel_url']. 'most-shared' ?>">MOST SHARED</a></li>
+        </ul>
+    </div>
+    <div class="wrapper-right">
+        <?php echo $COLLECT_EMAIL ?>
+
+        <?php echo $EDITOR_PICKS ?>
+
+        <div class="article-col-right">
+            <div class="fb-page" data-href="https://www.facebook.com/BrilioDotNetID" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false">
+                <div class="fb-xfbml-parse-ignore">
+                    <blockquote cite="https://www.facebook.com/BrilioDotNetID">
+                        <a href="https://www.facebook.com/BrilioDotNetID">Brilio</a>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+
+        <?php echo $JUST_UPDATE ?>
+
+        <?php echo $CHECK_THIS_OUT ?>
+
+    </div>
+</div>
+<!--endwrapper
