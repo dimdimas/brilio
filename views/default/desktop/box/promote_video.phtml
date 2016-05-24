@@ -1,0 +1,17 @@
+<?php if(!empty($promote_video)): ?>
+<!-- Promote video -->
+<div class="detail-box">
+    <div class="video-left">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/<?= $promote_video['url_code'] ?>" frameborder="0" allowfullscreen></iframe>
+        <script src="https://apis.google.com/js/platform.js"></script>
+    </div>
+    <div class="deskrip-video">
+        <div class="youtube-share">
+            <div class="g-ytsubscribe" data-channelid="UCjRH2OCntkHDJi0kIX3DZ3w" data-layout="full" data-count="default" style="vertical-align:middle;"></div>
+        </div>
+        <h5 class="title-color"><?php echo $promote_video['video_title'] ?></h5>
+        <h6 class="title-black"><?php echo $promote_video['video_deskrip'] ?></h6>
+    </div>
+</div>
+<!-- Promote video -->
+<?php endif; ?>

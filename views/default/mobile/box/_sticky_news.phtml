@@ -1,0 +1,14 @@
+<?php if ($sticky_data): ?>
+    <li>
+        <a href="<?= $sticky_data['news_url_full'] ?>" onclick="ga('send', 'event', 'Homepage - Headline', 'Click', '<?= $sticky_data['news_title'] ?>');" class="article-left-ads">
+            <img src="<?= $sticky_data['news_image_sticky'] ?>" data-src="<?= $sticky_data['news_image_sticky'] ?>" onclick="ga('send', 'event', 'Homepage - Headline', 'Impression', '<?= $sticky_data['news_title'] ?>');" width="120" height="60">
+        </a>
+        <div class="deskrip-br">
+            <div class="kategori-date-ads">
+                <a href="<?= $sticky_data['news_tag_list'][0]['tag_url_full'] ?>" class="link-kategori-ads"><?= ucwords($sticky_data['news_tag_list'][0]['tag_news_tags']) ?></a>
+            </div>
+            <p class="deskrip-text-arial"><a href="<?= $sticky_data['news_url_full'] ?>" onclick="ga('send', 'event', 'Homepage - Headline', 'Click', '<?= $sticky_data['news_title'] ?>');"><?= $sticky_data['news_title'] ?></a>
+            </p>
+        </div>
+    </li>
+<?php endif ?>

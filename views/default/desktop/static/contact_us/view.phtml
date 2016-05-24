@@ -1,0 +1,67 @@
+<script type="text/javascript" src="<?php echo $this->config['assets_js_url'] ?>contact.js"></script>
+<div style="position: absolute; left: 0; right: 0; width: 100%; border-bottom: 1px solid #ececec;"></div>
+<div class="section">
+    <ol class="list-breadcrumb list-unstyled">
+        <li><a href="<?php echo $this->config['base_url'] ?>">Home</a></li>
+        <li>&raquo;</li>
+        <li><a href="#">Company</a></li>
+        <li>&raquo;</li>
+        <li><a href="#">Kontak</a></li>
+    </ol>
+</div>
+<div class="static-page clearfix">
+    <div class="static-page-left clearfix">
+        <div class="static-page-left-text">Silahkan isi form di bawah ini untuk mengirim pertanyaan, kritik dan saran tentang <b>brilio.net</b></div>
+        <div class="static-page-left-form">
+            <form class="form-send" method="post" name="form" action="">
+                <ul>
+                    <li>
+                        <label>Nama</label>
+                        <input type="text" class="contact-txt" id="nama" name="nama">
+                    </li>
+                    <li>
+                        <label>Alamat</label>
+                        <input type="text" class="contact-txt" id="alamat" name="alamat">
+                    </li>
+                    <li>
+                        <label>No Hp/Telp</label>
+                        <input type="text" class="contact-txt" id="telp" name="telp">
+                    </li>
+                    <li>
+                        <label>Email</label>
+                        <input type="text" class="contact-txt" id="email" name="email">
+                    </li>
+                    <li>
+                        <label>Pesan</label>
+                        <textarea class="contact-textarea" id="pesan" name="pesan"></textarea>
+                    </li>
+                    <li>
+                        <input type="submit" class="contact-btn" id="btn_contact" value="Kirim">
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <div class="static-page-right clearfix">
+        <div class="office">
+            <b>Alamat</b>
+            <br>
+            <b>Redaksi Brilio.net</b>
+            <br> Jl. Tebet Barat IV No.5
+            <br> Jakarta Selatan, 12810
+            <br> Email : redaksi@brilio.net
+            <br> Telp : (021) 83795245
+            <br> Fax : (021) 83795246
+        </div>
+        <div class="menu-sitemap">
+            <ul>
+                <li>
+                    <a href="<?php echo $this->config['base_url'] ?>company/pengaduan/">Keberatan Pemberitaan</a>
+                </li>
+                <li>
+                    <a href="http://dewanpers.or.id/form_pengaduan/" target="_blank">Pengaduan Dewan Pres</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+<?php if ($cross): ?>
+<div class="detail-box cross-link">
+    <h5 class="title-detail"><?= (!empty($cross['news_related_title'])? html_entity_decode($cross['news_related_title']) : 'RECOMMENDED')?>
+    
+    </h5>
+    <ul class="list-crosslink list-unstyled clearfix">
+    <?php $related = json_decode($cross['news_related_content']);
+    foreach ($related as $key): 
+    $tmp = explode('|', $key); ?>
+    	<li>
+			    <a href="<?php echo $tmp[1] ?>" onclick="ga('send', 'event', 'Detail pages - Insert links', 'Click', '<?php echo $tmp[0] ?>');" target="_blank"><?php echo $tmp[0] ?></a>
+			</li>  
+    <?php endforeach ?>
+    </ul>
+</div>	
+<?php endif ?>

@@ -1,0 +1,14 @@
+<?php if ($list_just_update): ?>
+<div class="article-col-right">  
+<div class="title-border">
+<h4 class="title-line">JUST UPDATED</h4>
+</div>
+<ul class="list-article-block list-unstyled">
+  <?php $no=1; foreach ($list_just_update as $key): ?>
+    <li> 
+       <p class="text-block text-sm"><a href="<?= $key['news_url_full']?>" onclick="ga('send', 'event', '<?= $key['TE'] ?>', 'Just updated' ,'Urutan ke-<?= $no ?>');"><?= $key['news_title']?></a></p>
+    </li>
+  <?php $no++; endforeach ?>
+</ul>
+</div>
+<?php endif ?>

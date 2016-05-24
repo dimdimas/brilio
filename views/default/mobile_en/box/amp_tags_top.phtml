@@ -1,0 +1,21 @@
+<?php 
+$no = 1; 
+foreach ($list_tags_top as $key): 
+    if($no == 1)
+    {
+        ?>
+        <li><a href="<?= $key['TAG_URL'] ?>"><?= $key['TAG_TITLE'] ?></a></li>
+        <?php
+    }
+    else 
+    {
+        ?>
+        <li><a href="<?= $key['TAG_URL'] ?>" ><?= $key['TAG_TITLE'] ?></a></li>
+        <?php
+    }
+    ?>
+    
+  
+<?php 
+    $no++; 
+endforeach; ?>

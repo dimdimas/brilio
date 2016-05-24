@@ -1,0 +1,25 @@
+<?php if(!empty($promote_video)): ?>
+
+<div style="clear:both;">
+        <div class="title-bg">
+                Tahu Nggak Sih Panjang Mie Instan Yang Biasanya Kamu Makan?
+        </div>
+        <amp-iframe width="480"
+                height="270"
+                src="https://www.youtube.com/embed/<?php echo $promote_video['url_code'] ?>"
+                frameborder="0"
+                sandbox="allow-scripts allow-same-origin allow-popups"
+                layout="responsive"></amp-iframe>
+        <div class="share-video">
+            <h5 class="share-text">BRILIO VIDEO</h5>
+            <div class="yt-share">
+                <div class="g-ytsubscribe" data-channelid="UCjRH2OCntkHDJi0kIX3DZ3w" data-layout="default" data-count="default"></div>
+            </div>
+        </div>
+        <div class="deskrip-video">
+          <?php echo $promote_video['video_title'] ?><br/><br/>
+          <?php echo $promote_video['video_deskrip'] ?>
+        </div>
+</div>
+<hr />
+<?php endif; ?>

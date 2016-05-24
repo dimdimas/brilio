@@ -1,0 +1,34 @@
+<?php if ($list_editor): ?>
+<div class="article-col-right">
+<div class="title-border">
+    <h4 class="title-line">EDITOR'S PICK</h4>
+</div>
+<ul class="article-border list-unstyled">
+
+    <?php foreach ($list_editor as $key): ?>
+
+        <?php if ($key['no'] == 1):
+            $no=1;?>
+            <li>
+                <a href="<?= $key['news_url_full'] ?>" class="article-left" onclick="ga('send', 'event', '<?= $key['TE'] ?>', 'Editor picks' ,'Urutan ke-<?= $no ?>');">
+                    <img src="<?= $key['news_image_location_106'] ?>" data-src="<?= $key['news_image_location_106'] ?>" id="106" onerror="imgError(this)" class="img-full">
+                </a>
+                <div class="deskrip-right">
+                    <a href="<?= $key['tag_url_full'] ?>" class="link-kategori" onclick="ga('send', 'event', '<?= $key['TE'] ?>', 'Editor picks' ,'Urutan ke-<?= $no ?>');" ><?= $key['tag_news_tags'] ?></a>
+                    <p class="text-article text-sm"><a href="<?= $key['news_url_full'] ?>"><?= $key['news_title'] ?></a></p>
+                    <span class="date"><?= $key['news_date_publish_indo'] ?></span>
+                </div>
+            </li>
+        <?php else: ?>
+            <li>
+            <div class="deskrip-block">
+                <a href="<?= $key['tag_url_full'] ?>" class="link-kategori" onclick="ga('send', 'event', '<?= $key['TE'] ?>', 'Editor picks' ,'Urutan ke-<?= $no ?>');"><?= $key['tag_news_tags'] ?></a>
+                <p class="text-article text-sm"><a href="<?= $key['news_url_full'] ?>" onclick="ga('send', 'event', '<?= $key['TE'] ?>', 'Editor picks' ,'Urutan ke-<?= $no ?>');" ><?= $key['news_title'] ?></a></p>
+                <span class="date"><?= $key['news_date_publish_indo'] ?></span>
+            </div>
+            </li>
+        <?php endif ?>
+    <?php $no++; endforeach ?>
+</ul>
+</div>
+<?php endif ?>

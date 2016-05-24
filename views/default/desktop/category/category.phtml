@@ -1,0 +1,101 @@
+<!--headline kategori-->
+<div class="container">
+    <a href="" class="title-index">
+        <span class="title-abjad"><?php echo strtoupper(substr($TE, 0, 1)); ?></span>
+        <span class="title-text"><?php echo strtoupper($TE) ?></span>
+    </a>
+    <div class="headline headline-kategori clearfix">
+            <?php
+            if(!empty($headline)):
+                $no = 1;
+                foreach ($headline as $data):
+            ?>
+                    <div class="headline-box col-sm-6">
+                        <div style="background-image:url(<?php echo $data['news_image_location_full']; ?>);">
+                           <a href="<?= $data['news_url_full'] ?>" onclick="ga('send', 'event', 'Index category', 'Big articles', 'Artikel ke-1');" class="img-click">
+                            </a>
+                            <div class="deskrip-headline">
+                                <?php if ( !empty($data['news_to_tag_news'][0]) ): ?>
+                                    <a href="<?php echo $data['news_to_tag_news'][0]['tag_url_full'] ?>" class="link-tag" onclick="ga('send', 'event', 'Index category', 'Headline tag', 'Headline ke-<?php echo $no ?>');" ><?php echo strtoupper( $data['news_to_tag_news'][0]['tag_news_tags'] ) ?></a>
+                                <?php endif ?>
+                                <p><a href="<?= $data['news_url_full'] ?>" onclick="ga('send', 'event', 'Index category', 'Headline', 'Headline ke-2');" > <?= $data['news_title']?> </a></p>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+            $no++;
+                endforeach;
+            endif;
+            ?>
+    </div>
+</div>
+<!--endheadline-->
+<!--carousel-->
+<div class="slider-owl">
+    <div class="navigation">
+        <a class="prev" onclick="ga('send', 'event', '<?= $nama_halaman ?>', 'Carousel button', 'Prev');" ><span class="arrow-left"></span></a>
+        <a class="next" onclick="ga('send', 'event', '<?= $nama_halaman ?>', 'Carousel button', 'Next');" ><span class="arrow-right"></span></a>
+    </div>
+    <div class="owl-carousel">
+        <?php
+        if(!empty($carousel)):
+            $no= 1;
+            foreach ($carousel as $data):
+        ?>
+        <div class="slide">
+            <a href="<?php echo $data['news_url_full'] ?>"  onclick="ga('send', 'event', '<?= $nama_halaman ?>', 'Carousel article', 'Artikel ke-<?=$no?>');" >
+                <img src="<?php echo $data['news_image_location']. '/278x185-'. $data['news_image']; ?>"
+                    data-src="<?php echo $data['news_image_location']. '/278x185-'. $data['news_image']; ?>"
+                     id="278" onerror="imgError(this)"/>
+                <div class="deskrip-slide">
+                    <p><?php echo $data['news_title'] ?></p>
+                </div>
+            </a>
+        </div>
+        <?php
+            $no++;
+            endforeach;
+        endif;
+        ?>
+    </div>
+</div>
+<!--endcarousel-->
+<!--wrapper-->
+
+<div class="wrapper-col">
+	<div class="wrapper-left">
+            <div class="article-col-left">
+                <ul class="article-berita list-unstyled">
+                    <?php
+                    if(!empty($stream_news['DATA'])):
+                        $no=1;
+                        foreach ($stream_news['DATA'] as $data):
+                    ?>
+                            <li>
+                                <a href="<?php echo $data['news_url'] ?>" class="article-left" onclick="ga('send', 'event', 'Index category', 'Stream article', 'Artikel ke-<?php echo $no ?>');">
+                                    <img src="<?php echo $data['news_image_location_255_170'] ?>" class="img-full" id="278" onerror="imgError(this)">
+                                </a>
+                                <div class="deskrip-right">
+                                    <a href="<?php echo $data['tag_url']; ?>" class="link-kategori" onclick="ga('send', 'event', 'Index category', 'Stream tag', 'Artikel ke-<?php echo $no ?>');" ><?php echo $data['tag_title'] ?></a>
+                                    <p class="text-article"><a href="<?php echo $data['news_url']; ?>" onclick="ga('send', 'event', 'Index category', 'Stream article', 'Artikel ke-<?php echo $no ?>');"><?php echo $data['news_title']; ?></a></p>
+                                    <span class="date"><?php echo $data['news_date_publish'] ?></span>
+                                </div>
+                            </li>
+                    <?php
+                        $no++;
+                        endforeach;
+                    endif;
+                    ?>
+                </ul>
+            </div>
+            <ul class="list-pagination list-unstyled clearfix">
+                <?php echo $stream_news['PAGINATION'] ?>
+            </ul>
+	</div>
+	<div class="wrapper-right">
+            <?= $share_story ?>
+            <?= $trending ?>
+            <?= $check_this_out ?>
+        </div>
+</div>
+<!--endwrapper-->

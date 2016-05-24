@@ -1,0 +1,35 @@
+<!-- check this out -->
+<?php
+if(!empty($LIST_CHECK_THIS_OUT)):
+?>
+<div class="article-col-right">
+    <div class="title-border">
+        <h4 class="title-line">CHECK THIS OUT</h4>
+    </div>
+    <ul class="list-article-block list-unstyled">
+        <?php
+        $no = 1;
+        foreach ($LIST_CHECK_THIS_OUT as $data):
+        ?>
+            <li>
+                <a href="<?php echo $data['WHAT_HAPPEN_URL'] ?>" onclick="ga('send', 'event', '<?= $data['NAMA_HALAMAN']  ?>', 'Check this out', 'Urutan ke-<?= $no ?>');" class="img-block">
+                    <img src="<?php echo $data['WHAT_HAPPEN_IMAGES'] ?>" data-src="<?php echo $data['WHAT_HAPPEN_IMAGES'] ?>" id="300" width="300" height="150" onerror="imgError(this)">
+                </a>
+                <div class="deskrip-block">
+                    <p class="text-block">
+                        <a href="<?php echo $data['WHAT_HAPPEN_URL'] ?>" onclick="ga('send', 'event', '<?= $data['NAMA_HALAMAN'] ?>', 'Check this out', 'Urutan ke-<?= $no ?>');">
+                            <?php echo $data['WHAT_HAPPEN_CONTENT'] ?>
+                        </a>
+                    </p>
+                </div>
+            </li>
+        <?php
+        $no++;
+        endforeach;
+        ?>
+    </ul>
+</div>
+<?php
+endif;
+?>
+<!-- check this out -->

@@ -1,0 +1,98 @@
+<!--headline kategori-->
+<div class="container">
+    <a href="" class="title-index">
+        <span class="title-abjad"><?php echo strtoupper($breadcrumb['tag_alphabet']); ?></span>
+        <span class="title-text"><?php echo strtoupper($breadcrumb['tag_title']) ?></span>
+    </a>
+    <div class="headline headline-kategori clearfix">
+            <?php
+            if(!empty($list_tag['list_tag_first'])):
+                $no=1;
+                foreach ($list_tag['list_tag_first'] as $data):
+            ?>
+                    <div class="headline-box col-sm-6">
+                        <div style="background-image:url(<?php echo $data['news_image_location_full']; ?>);">
+                            <a href="<?= $data['news_url_full'] ?>" onclick="ga('send', 'event', '<?= $TE ?>', 'Big articles', 'Artikel ke-<?= $no ?>');" class="img-click">
+                            </a>
+                            <div class="deskrip-headline">
+                                <p><a href="<?= $data['news_url_full'] ?>" onclick="ga('send', 'event', '<?= $TE ?>', 'Big articles', 'Artikel ke-<?= $no ?>');" > <?php echo $data['news_title'] ?> </a></p>
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                $no++;
+                endforeach;
+            endif;
+            ?>
+    </div>
+</div>
+<!--endheadline-->
+<!--carousel-->
+<div class="slider-owl">
+    <div class="navigation">
+        <a class="prev" onclick="ga('send', 'event', '<?= $TE ?>', 'Carousel button', 'Prev');" ><span class="arrow-left"></span></a>
+        <a class="next" onclick="ga('send', 'event', '<?= $TE ?>', 'Carousel button', 'Next');" ><span class="arrow-right"></span></a>
+    </div>
+    <div class="owl-carousel">
+        <?php
+        if(!empty($carousel)):
+            $no=1;
+            foreach ($carousel as $data):
+        ?>
+        <div class="slide">
+            <a href="<?php echo $data['news_url_full'] ?>" onclick="ga('send', 'event', '<?= $TE ?>', 'Carousel article', 'Artikel ke-<?=$no?>');"  >
+                <img src="<?php echo $data['news_image_carousel_278'] ?>"
+                     data-src="<?php echo $data['news_image_carousel_278'] ?>"
+                     id="278"
+                     onerror="imgError(this)"/>
+                <div class="deskrip-slide">
+                    <p><?php echo $data['news_title'] ?></p>
+                </div>
+            </a>
+        </div>
+        <?php
+            $no++;
+            endforeach;
+        endif;
+        ?>
+    </div>
+</div>
+<!--endcarousel-->
+<!--wrapper-->
+
+<div class="wrapper-col">
+    <div class="wrapper-left">
+            <div class="article-col-left">
+                <ul class="article-berita list-unstyled">
+                    <?php
+                    if(!empty($list_tag['list_tag_second'])):
+                        $no=1;
+                        foreach ($list_tag['list_tag_second'] as $data):
+                    ?>
+                            <li>
+                                <a href="<?php echo $data['news_url_full'] ?>" class="article-left" onclick="ga('send', 'event', '<?= $TE ?>', 'Stream article', 'Artikel ke-<?= $no ?>');">
+                                    <img onerror="imgError(this)" id="278" width="278" height="185" src="<?php echo $data['news_image_location_255_170'] ?>" data-src="<?php echo $data['news_image_location_255_170'] ?>" class="img-full lazy">
+                                </a>
+                                <div class="deskrip-right">
+                                    <p class="text-article"><a href="<?php echo $data['news_url_full']; ?>" onclick="ga('send', 'event', '<?= $TE ?>', 'Stream article', 'Artikel ke-<?= $no ?>');" ><?php echo $data['news_title']; ?></a></p>
+                                    <span class="date"><?php echo $data['news_date_publish_indo'] ?></span>
+                                </div>
+                            </li>
+                    <?php
+                        $no++;
+                        endforeach;
+                    endif;
+                    ?>
+                </ul>
+            </div>
+            <ul class="list-pagination list-unstyled clearfix">
+                <?php echo $pagination ?>
+            </ul>
+    </div>
+    <div class="wrapper-right">
+            <?= $share_story ?>
+            <?= $trending ?>
+            <?= $check_this_out ?>
+        </div>
+</div>
+<!--endwrapper-->

@@ -1,0 +1,79 @@
+<!--section -->
+<div class="section">
+    <ol class="list-breadcrumb list-unstyled">
+        <!-- {BREADCUMB} -->
+        <li>
+            <a href="<?php echo $this->config['rel_url']; ?>" onclick="ga('send', 'event', 'Home - Breadcumb', 'Click', 'Home');">HOME</a>
+        </li>
+        <li>
+            &raquo;
+        </li>
+        <li>
+            <a href="<?php echo $this->config['rel_url']; ?>tag/" onclick="ga('send', 'event', 'Tag - Breadcumb, 'Click', 'Tag');">TAG</a>
+        </li>
+        <li>
+            &raquo;
+        </li>
+        <li>
+            <a href="<?php echo $this->config['rel_url']; ?>tag/<?php echo $breadcrumb['tag_alphabet'] ?>/" onclick="ga('send', 'event', 'Tag pages - Breadcumb', 'Click', '<?php echo $breadcrumb['tag_title'] ?>');"><?php echo $breadcrumb['tag_alphabet'] ?></a>
+        </li>
+        <li>
+            &raquo;
+        </li>
+        <li>
+            <a href="<?php echo $this->config['rel_url']; ?>tags/<?php echo $breadcrumb['tag_alphabet']."/".str_replace(' ', '-', $breadcrumb['tag_title']) ?>/" onclick="ga('send', 'event', 'Tag pages - Breadcumb', 'Click', '<?php echo $breadcrumb['tag_title'] ?>');"><?php echo  $breadcrumb['tag_title'] ?></a>
+        </li>
+        <!-- end {BREADCUMB} -->
+    </ol>
+    <div class="header-br">
+        <div class="title-list text-left">
+            <h6><?php echo $breadcrumb['tag_title'] ?></h6>
+        </div>
+        <!-- {HEADLINE} -->
+        <?php if ($list_tag['list_tag_first']): ?>
+            <?php foreach ($list_tag['list_tag_first'] as $key): ?>
+                    <a href="<?php echo $key['news_url_full'] ?>" onclick="ga('send', 'event', 'Tag pages - Latest updates stream', 'Click', '<?php echo $breadcrumb['tag_title'] ?>');" class="img-headline blue">
+                        <img src="<?php echo  $key['news_image_url_full'] ?>" class="img-full">
+                    </a>
+                    <div class="deskrip-head-index">
+                        <h6 class="title-head">
+                            <a href="<?php echo $key['news_url_full'] ?>" onclick="ga('send', 'event', 'Tag pages - Latest updates stream', 'Click', '<?php echo $breadcrumb['tag_title'] ?>');"><?php echo $key['news_title'] ?></a>
+                        </h6>
+                        <div class="kategori-date">
+                            <span class="date"><?php echo $key['news_entry_fix'] ?></span>
+                        </div>
+                    </div>
+            <?php endforeach ?>
+        <?php endif ?>
+        <!-- end {HEADLINE} -->
+    </div>
+    <!-- {NEWS} -->
+    <ul class="list-article-berita-border list-article-small list-unstyled">
+        <!-- {VIEW_NEWS} -->
+        <?php if ($list_tag['list_tag_second']): ?>
+            <?php foreach ($list_tag['list_tag_second'] as $key): ?>
+                <li>
+                    <div class="deskrip-br">
+                        <!--<div class="kategori-date">
+                            <div class="kategori-date">
+                                <a href="{TAGS_URL}" class="link-kategori">{TAGS_TITLE}</a>
+                            </div>
+                        </div>-->
+                        <p class="deskrip-text">
+                            <a href="<?php echo $key['news_url_full'] ?>" onclick="ga('send', 'event', '<?php echo $breadcrumb['tag_title'] ?> - Index updates stream', 'Click', '<?php echo $key['news_title'] ?>');"><?php echo $key['news_title'] ?></a>
+                        </p>
+                        <span class="date"><?php echo $key['news_entry_fix'] ?></span>
+                    </div>
+                </li>
+            <?php endforeach ?>
+        <?php endif ?>
+        <!--  end {VIEW_NEWS} -->
+    </ul>
+    <ul class="list-pagination list-unstyled">
+        <!-- {PAGINATION} -->
+        <?php echo $pagination ?>
+        <!-- end {PAGINATION} -->
+    </ul>
+    <!-- end {NEWS} -->
+</div>
+<!--end section-->
